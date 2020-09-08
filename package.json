@@ -10,10 +10,20 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/masked-view": "^0.1.10",
+    "@react-navigation/bottom-tabs": "^5.8.0",
+    "@react-navigation/native": "^5.7.3",
+    "@react-navigation/stack": "^5.9.0",
     "lodash": "^4.17.20",
     "react": "16.13.1",
     "react-native": "0.63.2",
-    "react-native-calendars": "^1.403.0"
+    "react-native-calendars": "^1.403.0",
+    "react-native-elements": "^2.3.2",
+    "react-native-gesture-handler": "^1.8.0",
+    "react-native-reanimated": "^1.13.0",
+    "react-native-safe-area-context": "^3.1.7",
+    "react-native-screens": "^2.10.1",
+    "react-native-vector-icons": "^7.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.11.5",
