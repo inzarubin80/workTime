@@ -15,33 +15,18 @@ import {
 } from 'react-native-calendars';
 
 import moment from 'moment';
-import { useSelector, useDispatch} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
-import {setCurrentDate} from '../redux/actions'
+import { setCurrentDate } from '../redux/actions'
 
 const CalendarScreen = () => {
- 
-
-  const value1 = useSelector(state => state.app.currentDate);
-  console.log('value1 ' + value1);
 
   const EVENTS = useSelector(state => state.app.EVENTS);
   const currentDate = useSelector(state => state.app.currentDate);
- 
-  //console.log("EVENTS -------" + EVENTS.length);
-
-  //const [currentDate, setCurrentDate] = useState('2017-09-07');
-
   const dispatch = useDispatch()
-  
+
   onDateChanged = (date) => {
-    // console.warn('ExpandableCalendarScreen onDateChanged: ', date, updateSource);
-    // fetch and set data for date + week ahead
-
-    console.log('устанавливаем дату' + date);
-    
     dispatch(setCurrentDate(date));
-
   };
 
   onMonthChange = (/* month, updateSource */) => {
@@ -64,6 +49,8 @@ const CalendarScreen = () => {
       <TouchableOpacity
         style={styles.item}>
         <View>
+        <Text style={styles.itemHourText}>Где мы!!!!!!!</Text>
+          
           <Text style={styles.itemHourText}>{item.hour}</Text>
           <Text style={styles.itemDurationText}>{item.duration}</Text>
         </View>
@@ -146,9 +133,15 @@ const CalendarScreen = () => {
       // headerStyle={styles.calendar} // for horizontal only
       // disableWeekScroll
       />
+
       <Timeline
         format24h={true}
-        eventTapped={e => e}
+        
+        eventTapped={e => {
+        
+          console.log(e);
+          return e;
+        }}
         events={EVENTS.filter(event => moment(event.start).isSame(currentDate, 'day'))}
       // scrollToFirst={true}
       // start={0}
