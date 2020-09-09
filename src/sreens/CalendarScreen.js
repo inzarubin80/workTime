@@ -198,8 +198,8 @@ export default class CalendarScreen extends Component {
           // markedDates={this.getMarkedDates()} // {'2019-06-01': {marked: true}, '2019-06-02': {marked: true}, '2019-06-03': {marked: true}};
           // markedDates={() => {}} // {'2019-06-01': {marked: true}, '2019-06-02': {marked: true}, '2019-06-03': {marked: true}};
           theme={this.getTheme()}
-          leftArrowImageSource={require('./img/previous.png')}
-          rightArrowImageSource={require('./img/next.png')}
+          leftArrowImageSource={require('../img/previous.png')}
+          rightArrowImageSource={require('../img/next.png')}
           // calendarStyle={styles.calendar}
           // headerStyle={styles.calendar} // for horizontal only
           // disableWeekScroll
