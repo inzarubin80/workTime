@@ -123,7 +123,7 @@ const CalendarScreen = ({navigation }) => {
     >
 
       <Button
-        title="Clear button"
+        title="Добавить работу"
         type="clear"
         onPress = {() => navigation.navigate('EventScreen')}
       />
