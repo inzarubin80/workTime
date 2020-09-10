@@ -10,10 +10,13 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "^3.0.2",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.8.0",
     "@react-navigation/native": "^5.7.3",
     "@react-navigation/stack": "^5.9.0",
+    "datetimepicker": "^0.1.39",
+    "formik": "^2.1.5",
     "lodash": "^4.17.20",
     "react": "16.13.1",
     "react-native": "0.63.2",

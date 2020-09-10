@@ -8,6 +8,8 @@ target 'workTime' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker'
+
   target 'workTimeTests' do
     inherit! :complete
     # Pods for testing

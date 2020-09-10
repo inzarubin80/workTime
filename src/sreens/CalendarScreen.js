@@ -1,25 +1,29 @@
 import _ from 'lodash';
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Platform,
   StyleSheet,
   View,
   Text,
-  TouchableOpacity,
-  Button
+  TouchableOpacity
 } from 'react-native';
+
 import {
   ExpandableCalendar,
   Timeline,
   CalendarProvider
 } from 'react-native-calendars';
 
+import { Formik } from 'formik';
+
+import { Button } from 'react-native-elements';
+
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux'
 
 import { setCurrentDate } from '../redux/actions'
 
-const CalendarScreen = () => {
+const CalendarScreen = ({navigation }) => {
 
   const EVENTS = useSelector(state => state.app.EVENTS);
   const currentDate = useSelector(state => state.app.currentDate);
@@ -49,8 +53,8 @@ const CalendarScreen = () => {
       <TouchableOpacity
         style={styles.item}>
         <View>
-        <Text style={styles.itemHourText}>Где мы!!!!!!!</Text>
-          
+          <Text style={styles.itemHourText}>Где мы!!!!!!!</Text>
+
           <Text style={styles.itemHourText}>{item.hour}</Text>
           <Text style={styles.itemDurationText}>{item.duration}</Text>
         </View>
@@ -117,6 +121,13 @@ const CalendarScreen = () => {
       disabledOpacity={0.6}
     // todayBottomMargin={16}
     >
+
+      <Button
+        title="Clear button"
+        type="clear"
+        onPress = {() => navigation.navigate('EventScreen')}
+      />
+
       <ExpandableCalendar
         // horizontal={false}
         // hideArrows
@@ -136,9 +147,9 @@ const CalendarScreen = () => {
 
       <Timeline
         format24h={true}
-        
+
         eventTapped={e => {
-        
+
           console.log(e);
           return e;
         }}
