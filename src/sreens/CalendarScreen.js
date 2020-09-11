@@ -10,18 +10,15 @@ import {
 
 import {
   ExpandableCalendar,
-  Timeline,
   CalendarProvider
 } from 'react-native-calendars';
 
-import { Formik } from 'formik';
-
 import { Button } from 'react-native-elements';
-
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux'
-
 import { setCurrentDate } from '../redux/actions'
+
+import EventList from '../components/EventList'
 
 const CalendarScreen = ({navigation }) => {
 
@@ -65,6 +62,16 @@ const CalendarScreen = ({navigation }) => {
       </TouchableOpacity>
     );
   };
+
+
+  const EVENTS_Day = EVENTS.filter(  
+    (event) => {
+      console.log('currentDate' + currentDate);
+      console.log('event.date' +  event.date);
+      return moment(event.date).isSame(currentDate, 'day')
+    }
+    );
+
 
   const getTheme = () => {
     const themeColor = '#0059ff';
@@ -145,19 +152,23 @@ const CalendarScreen = ({navigation }) => {
       // disableWeekScroll
       />
 
-      <Timeline
-        format24h={true}
 
-        eventTapped={e => {
+      <EventList
+        
+      
+        //events={EVENTS.filter(event => moment(event.date).isSame(currentDate, 'day'))}
+      
+        events={EVENTS_Day}
 
-          console.log(e);
-          return e;
-        }}
-        events={EVENTS.filter(event => moment(event.start).isSame(currentDate, 'day'))}
+       // events={EVENTS}
+
+
       // scrollToFirst={true}
       // start={0}
       // end={24}
       />
+
+    
     </CalendarProvider>
   )
 }

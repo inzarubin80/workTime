@@ -3,24 +3,22 @@ import { View, FlatList, StyleSheet } from 'react-native';
 
 import EventItem from './EventItem';
 
-const ListEvents = ({navigation, listData}) => {
+const ListEvents = ({ navigation,  events}) => {
+
+
+  console.log('ListEvents ' + events.lenght);
 
   const renderProductItem = itemData => {
+
     return (
       <EventItem
-        title={itemData.item.title}
-        image={itemData.item.imageUrl}
-        destination={itemData.item.destination}
-    
-        onSelectMeal={() => {
-             
-          navigation.navigate('ProductScreen',
-          {
-            prodId: itemData.item.id
-          }
+       
+        title={itemData.item.title} 
+        summary={itemData.item.summary} 
+        id={itemData.item.id} 
+        duration = {itemData.item.id}
         
-          );
-        }}
+        
       />
     );
   };
@@ -28,7 +26,7 @@ const ListEvents = ({navigation, listData}) => {
   return (
     <View style={styles.list}>
       <FlatList
-        data={listData}
+        data={events}
         keyExtractor={(item, index) => item.id}
         renderItem={renderProductItem}
         style={{ width: '100%' }}
