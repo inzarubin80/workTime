@@ -3,22 +3,27 @@ import { View, FlatList, StyleSheet } from 'react-native';
 
 import EventItem from './EventItem';
 
-const ListEvents = ({ navigation,  events}) => {
-
-
-  console.log('ListEvents ' + events.lenght);
+const ListEvents = ({ navigation, events }) => {
 
   const renderProductItem = itemData => {
 
     return (
       <EventItem
-       
-        title={itemData.item.title} 
-        summary={itemData.item.summary} 
-        id={itemData.item.id} 
-        duration = {itemData.item.id}
-        
-        
+
+        title={itemData.item.title}
+        summary={itemData.item.summary}
+        id={itemData.item.id}
+        duration={itemData.item.duration}
+        onSelectEvent={() => {
+
+          navigation.navigate('EventForm',
+            {
+              eventId: itemData.item.id
+            }
+
+          )
+        }
+        }
       />
     );
   };

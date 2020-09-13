@@ -2,7 +2,7 @@ export const EVENTS_DATA = [
    
    {
       id:"1",
-      date: '2017-09-06 22:30:00',
+      date: '2017-09-06',
       title: 'Сделать отчет на СКД',
 
       duration: '10',
@@ -12,7 +12,7 @@ export const EVENTS_DATA = [
 
     {
       id:'2',
-      date: '2017-09-06 22:30:00',
+      date: '2017-09-06',
       title: 'Обновить базу',
     
       duration: '22',

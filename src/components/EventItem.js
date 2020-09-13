@@ -11,22 +11,26 @@ import { ListItem, Icon, Text } from 'react-native-elements'
 const EventItem = props => {
   return (
     <View style={styles.mealItem}>
-      <TouchableOpacity>
-        <ListItem  bottomDivider>
-        <Icon name='rowing' />
+      <TouchableOpacity onPress={props.onSelectEvent}>
 
-          <ListItem.Content>
+      
 
-         
+          <ListItem bottomDivider>
+            <Icon name='rowing' />
 
-            <ListItem.Title> <Text h4>{props.title}</Text> </ListItem.Title>
-            <ListItem.Subtitle>{props.summary}</ListItem.Subtitle>
-            <View><Text>{'Часов:' +  props.duration}</Text>
-            </View>
+            <ListItem.Chevron />
 
-          </ListItem.Content>
-          <ListItem.Chevron />
-        </ListItem>
+            <ListItem.Content>
+              <ListItem.Title> <Text h4>{props.title}</Text> </ListItem.Title>
+              <ListItem.Subtitle>{props.summary}</ListItem.Subtitle>
+              <Text>{props.duration}</Text>
+            </ListItem.Content>
+            <ListItem.Chevron />
+
+          </ListItem>
+
+    
+
       </TouchableOpacity >
     </View >
   );

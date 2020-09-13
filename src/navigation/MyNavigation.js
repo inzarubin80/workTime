@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import CalendarScreen from '../sreens/CalendarScreen'
-import EventScreen from '../sreens/EventScreen'
+import EventForm from '../form/EventForm'
 
 import YourApp from '../sreens/YourApp'
 
@@ -17,7 +17,7 @@ const StackNavigator = () => {
   return (
       <Stack.Navigator>
         <Stack.Screen name="Calendar" component={CalendarScreen} />
-        <Stack.Screen name="EventScreen" component={EventScreen} />
+        <Stack.Screen name="EventForm" component={EventForm} />
       </Stack.Navigator>
   );
 }
@@ -25,9 +25,16 @@ const StackNavigator = () => {
 const MyNavigation = (props) => {
   return (
     <NavigationContainer>
+
+        <StackNavigator/>
+
+
+    {/*  
       <Tab.Navigator>
         <Tab.Screen name="Calendar" component={StackNavigator} />
       </Tab.Navigator>
+    */}
+
     </NavigationContainer>
   );
 }

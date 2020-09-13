@@ -1,4 +1,5 @@
-export const INSET_FAVORITE       = 'APP/INSET_FAVORITE';
-export const REMOVE_FAVORITE      = 'APP/REMOVE_FAVORITE';
-export const SET_CURRENTDATE      = 'APP/REMOVE_FAVORITE';
+export const SET_CURRENTDATE      = 'APP/SET_CURRENTDATE';
+export const EDIT_EVENT         = 'APP/EDIT_EVENT';
+export const ADD_EVENT         = 'APP/ADD_EVENT';
+
 

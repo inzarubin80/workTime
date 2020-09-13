@@ -20,11 +20,29 @@ import { setCurrentDate } from '../redux/actions'
 
 import EventList from '../components/EventList'
 
-const CalendarScreen = ({navigation }) => {
+const CalendarScreen = ({ navigation }) => {
 
   const EVENTS = useSelector(state => state.app.EVENTS);
   const currentDate = useSelector(state => state.app.currentDate);
   const dispatch = useDispatch()
+
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+
+      headerRight: () => (
+        <Button
+          title="Добавить"
+          onPress={() => {
+            navigation.navigate('EventForm',{eventId: '-1', currentDate:currentDate}
+            )
+          }
+        }
+        />
+      ),
+    });
+  }, [navigation, currentDate]);
+
 
   onDateChanged = (date) => {
     dispatch(setCurrentDate(date));
@@ -64,13 +82,11 @@ const CalendarScreen = ({navigation }) => {
   };
 
 
-  const EVENTS_Day = EVENTS.filter(  
+  const EVENTS_Day = EVENTS.filter(
     (event) => {
-      console.log('currentDate' + currentDate);
-      console.log('event.date' +  event.date);
       return moment(event.date).isSame(currentDate, 'day')
     }
-    );
+  );
 
 
   const getTheme = () => {
@@ -129,12 +145,6 @@ const CalendarScreen = ({navigation }) => {
     // todayBottomMargin={16}
     >
 
-      <Button
-        title="Добавить работу"
-        type="clear"
-        onPress = {() => navigation.navigate('EventScreen')}
-      />
-
       <ExpandableCalendar
         // horizontal={false}
         // hideArrows
@@ -154,13 +164,13 @@ const CalendarScreen = ({navigation }) => {
 
 
       <EventList
-        
-      
+
+
         //events={EVENTS.filter(event => moment(event.date).isSame(currentDate, 'day'))}
-      
+        navigation={navigation}
         events={EVENTS_Day}
 
-       // events={EVENTS}
+      // events={EVENTS}
 
 
       // scrollToFirst={true}
@@ -168,7 +178,7 @@ const CalendarScreen = ({navigation }) => {
       // end={24}
       />
 
-    
+
     </CalendarProvider>
   )
 }

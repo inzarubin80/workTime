@@ -1,21 +1,8 @@
 import {
-  SET_CURRENTDATE
+  SET_CURRENTDATE,
+  EDIT_EVENT,
+  ADD_EVENT
 } from './types'
-
-export const addFavorite = (idProd) => {  
-    return {
-        type: INSET_FAVORITE,
-        payload: idProd
-    }
-}
-
-export const removeFavorite = (idProd) => {  
-  return {
-      type: REMOVE_FAVORITE,
-      payload: idProd
-  }
-}
-
 
 export const setCurrentDate = (currentDate) => {  
   return {
@@ -24,3 +11,17 @@ export const setCurrentDate = (currentDate) => {
   }
 }
 
+export const changeEvent = (event) => {  
+  return {
+      type: EDIT_EVENT,
+      payload: event
+  }
+}
+
+export const addEvent = (event) => {  
+  return {
+      type: ADD_EVENT,
+      payload: event
+  }
+
+}
