@@ -22,92 +22,92 @@ const EventScreen = ({ route, navigation }) => {
     }
 
     return (
-<ScrollView>
+        <ScrollView>
 
 
-         <KeyboardAvoidingView
-            style={styles.container} behavior='position' >
+            <KeyboardAvoidingView
+                style={styles.container} behavior='position' >
 
-            <Formik
-                
-                initialValues={initialobj}
-                onSubmit={
-                    (values) => {
-                        
-                        if  (initialobj.id=='-1'){
-                            dispatch(addEvent(values)) 
+                <Formik
+
+                    initialValues={initialobj}
+                    onSubmit={
+                        (values) => {
+
+                            if (initialobj.id == '-1') {
+                                dispatch(addEvent(values))
+                            }
+                            else {
+                                dispatch(changeEvent(values))
+                            }
+                            navigation.goBack();
                         }
-                        else{
-                            dispatch(changeEvent(values))
-                        }
-                        navigation.goBack();
                     }
-                }
-            >
-                {({ handleChange, handleBlur, handleSubmit, values }) => (
+                >
+                    {({ handleChange, handleBlur, handleSubmit, values }) => (
 
-                    <View>
-
-
-                        <Input
-                            placeholder="Номер"
-                            value={values.id}
-                            onChangeText={handleChange('id')}
-                            onBlur={handleBlur('id')}
-                            disabled={true}
-                            label='Номер'
-                        />
-
-                        <Input
-                            placeholder="Дата"
-                            value={values.date}
-                            onChangeText={handleChange('date')}
-                            onBlur={handleBlur('date')}
-                            label='Дата'
-                        />
-
-                        <Input
-                            placeholder="Заголовок"
-                            value={values.title}
-                            onChangeText={handleChange('title')}
-                            onBlur={handleBlur('title')}
-                            label='Заголовок'
-
-                        />
+                        <View>
 
 
+                            <Input
+                                placeholder="Номер"
+                                value={values.id}
+                                onChangeText={handleChange('id')}
+                                onBlur={handleBlur('id')}
+                                disabled={true}
+                                label='Номер'
+                            />
 
-                        <Input
-                            placeholder="Описание"
-                            onChangeText={handleChange('summary')}
-                            onBlur={handleBlur('summary')}
-                            value={values.summary}
-                            label='Описание'
-                            multiline={true}
-                        blurOnSubmit={true}
-                        onSubmitEditing={()=>{Keyboard.dismiss()}}
+                            <Input
+                                placeholder="Дата"
+                                value={values.date}
+                                onChangeText={handleChange('date')}
+                                onBlur={handleBlur('date')}
+                                label='Дата'
+                            />
 
+                            <Input
+                                placeholder="Заголовок"
+                                value={values.title}
+                                onChangeText={handleChange('title')}
+                                onBlur={handleBlur('title')}
+                                label='Заголовок'
 
-                        />
-
-
-                        <Input
-                            placeholder="Количество часов"
-                            onChangeText={handleChange('duration')}
-                            onBlur={handleBlur('duration')}
-                            value={values.duration}
-                            keyboardType='numeric'
-                            label='Количество часов'
-                        />
+                            />
 
 
 
-                        <Button onPress={handleSubmit} title="ОК" />
-                    </View>
-                )}
-                
-            </Formik>
-        </KeyboardAvoidingView>
+                            <Input
+                                placeholder="Описание"
+                                onChangeText={handleChange('summary')}
+                                onBlur={handleBlur('summary')}
+                                value={values.summary}
+                                label='Описание'
+                                multiline={true}
+                                blurOnSubmit={true}
+                                onSubmitEditing={() => { Keyboard.dismiss() }}
+
+
+                            />
+
+
+                            <Input
+                                placeholder="Количество часов"
+                                onChangeText={handleChange('duration')}
+                                onBlur={handleBlur('duration')}
+                                value={values.duration}
+                                keyboardType='numeric'
+                                label='Количество часов'
+                            />
+
+
+
+                            <Button onPress={handleSubmit} title="ОК" />
+                        </View>
+                    )}
+
+                </Formik>
+            </KeyboardAvoidingView>
         </ScrollView>
 
     )
