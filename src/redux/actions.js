@@ -40,16 +40,18 @@ const setLoginState = (loginData) => {
 export const login = (username, password) => {
   return (dispatch) => {  // don't forget to use dispatch here!
     return executeAuthenticationService(username, password)
-      .then((response) => JSON.parse(response.text().trim()))
+      .then(response => response.json())
       .then((json) => {
         if (json.msg === 'success') { // response success checking logic could differ
+          console.log('Все хорошо');
           dispatch(setLoginState({ username:username, password:password})); // our action is called here
         } else {
-          Alert.alert('Login Failed', 'Username or Password is incorrect');
+          console.log('Login Failed', 'Username or Password is incorrect');
         }
       })
       .catch((err) => {
-        Alert.alert('Login Failed', 'Some error occurred, please retry');
+        console.log('Login Failed', 'Some error occurred, please retry');
+        
         console.log(err);
       });
   };

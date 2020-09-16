@@ -26,6 +26,10 @@ export const setBasicAuthToken = async (username, password) => {
 */
 
 export const  executeAuthenticationService = (username, password) => {
+
+    console.log('Basic ' + encode(username + ":" + password));
+    
+
     return fetch(`${API_URL}/?typerequest=authenticate`,
         {
             method: 'get',

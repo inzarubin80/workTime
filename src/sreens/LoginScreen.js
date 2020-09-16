@@ -2,15 +2,17 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Input } from 'react-native-elements';
 import {AppButton} from '../components/AppButton';
-//import { useDispatch } from 'react-redux';
-//import { login } from '../redux/actions';
+
+import { useDispatch } from 'react-redux';
+import { login } from '../redux/actions';
 
 
 const LoginScreen = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    
+    const dispatch = useDispatch();
+
     return (
         <View style={styles.container}>
 
@@ -29,7 +31,7 @@ const LoginScreen = () => {
             />
 
 
-            <AppButton onPress={() => useDispatch(login(username, password ))}> Вход</AppButton>
+            <AppButton onPress={() => dispatch(login(username, password ))}> Вход</AppButton>
           
         </View>
     );
