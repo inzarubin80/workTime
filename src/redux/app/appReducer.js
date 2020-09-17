@@ -3,7 +3,7 @@ import { EVENTS_DATA } from '../../data/dummy-data'
 
 const initialState = {
     EVENTS: EVENTS_DATA,
-    currentDate: '2017-09-07',
+    currentDate: new Date(),
     currentId: 2,
 };
 
@@ -51,7 +51,7 @@ export default (state = initialState, action) => {
 
             )
         }
-        
+
         default:
 
             return state

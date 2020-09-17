@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/user/userActions';
 
 const LoginScreen = () => {
@@ -11,6 +11,8 @@ const LoginScreen = () => {
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
 
+    const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+    
     return (
         <View style={styles.container}>
 
@@ -28,8 +30,8 @@ const LoginScreen = () => {
                 style={styles.input}
             />
 
-
-            <Button title= 'Войти' onPress={() => dispatch(login(username, password ))} /> 
+            {isLoggedIn?(<ActivityIndicator size="large" color="#00ff00" />)
+            :(<Button title= 'Войти' onPress={() => dispatch(login(username, password ))} /> )}
           
         </View>
     );
