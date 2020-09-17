@@ -6,7 +6,16 @@ import {createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk'
 import rootReducer from './src/redux/rootReducer';
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+
+const logger = store => next => action => {
+  console.log('dispatching', action)
+  let result = next(action)
+  console.log('next state', store.getState())
+  return result
+}
+
+
+const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 const App = ()  => {
   return (<Provider store={store}> 
       <MyNavigation/> 

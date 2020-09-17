@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Input } from 'react-native-elements';
-import {AppButton} from '../components/AppButton';
+import { Input, Button } from 'react-native-elements';
 
 import { useDispatch } from 'react-redux';
-import { login } from '../redux/actions';
-
+import { login } from '../redux/user/userActions';
 
 const LoginScreen = () => {
 
@@ -31,7 +29,7 @@ const LoginScreen = () => {
             />
 
 
-            <AppButton onPress={() => dispatch(login(username, password ))}> Вход</AppButton>
+            <Button title= 'Войти' onPress={() => dispatch(login(username, password ))} /> 
           
         </View>
     );
@@ -55,6 +53,5 @@ const styles = StyleSheet.create({
         //marginBottom: 10,
     }
 });
-
 
 export default LoginScreen;

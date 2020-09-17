@@ -3,7 +3,7 @@ import { Button, TextInput, View, KeyboardAvoidingView, Platform, StyleSheet, Ke
 import { Formik } from 'formik';
 import { Input } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux'
-import { changeEvent, addEvent } from '../redux/actions'
+import { changeEvent, addEvent } from '../redux/app/appActions'
 
 const EventScreen = ({ route, navigation }) => {
 

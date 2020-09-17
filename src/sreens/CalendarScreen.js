@@ -16,7 +16,7 @@ import {
 import { Button } from 'react-native-elements';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux'
-import { setCurrentDate } from '../redux/actions'
+import { setCurrentDate } from '../redux/app/appActions'
 
 import EventList from '../components/EventList'
 

@@ -1,33 +1,45 @@
 import * as React from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import CalendarScreen from '../sreens/CalendarScreen'
 import LoginScreen from '../sreens/LoginScreen'
-
 import EventForm from '../form/EventForm'
+import { useSelector } from 'react-redux'
 
 
-const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const StackNavigator = () => {
-  return (
+const StackNavigator = ({isLoggedIn}) => {
+  
+  console.log('isLoggedIn - stack',isLoggedIn);
+
+  return isLoggedIn ? (
+    <Stack.Navigator>
+      
+      <Stack.Screen name="Calendar" component={CalendarScreen} />
+      <Stack.Screen name="EventForm" component={EventForm} />
+      
+    </Stack.Navigator>
+  )
+    :
+    (
       <Stack.Navigator>
-       <Stack.Screen name="LoginScreen" component={LoginScreen} />
-       <Stack.Screen name="Calendar" component={CalendarScreen} />
-       <Stack.Screen name="EventForm" component={EventForm} />
+        <Stack.Screen name="LoginScreen" component={LoginScreen} />
       </Stack.Navigator>
-  );
+    )
+    ;
 }
 
 const MyNavigation = (props) => {
+
+  const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+
+  console.log('isLoggedIn',isLoggedIn);
+
   return (
     <NavigationContainer>
-
-        <StackNavigator/>
-
+      <StackNavigator isLoggedIn={isLoggedIn} />
     </NavigationContainer>
   );
 }

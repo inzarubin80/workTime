@@ -1,14 +1,10 @@
-import { SET_CURRENTDATE, EDIT_EVENT, ADD_EVENT, SET_LOGIN_STATE } from './types'
-import { EVENTS_DATA } from '../data/dummy-data'
+import { SET_CURRENTDATE, EDIT_EVENT, ADD_EVENT} from '../types'
+import { EVENTS_DATA } from '../../data/dummy-data'
 
 const initialState = {
     EVENTS: EVENTS_DATA,
     currentDate: '2017-09-07',
     currentId: 2,
-    isLoggedIn: false,
-    username: '',
-    password: ''
-
 };
 
 export default (state = initialState, action) => {
@@ -55,14 +51,7 @@ export default (state = initialState, action) => {
 
             )
         }
-
-        case SET_LOGIN_STATE:
-            return {
-                ...state,
-                ...action.payload, // this is what we expect to get back from API call and login page input
-                isLoggedIn: true, // we set this as true on login
-            };
-
+        
         default:
 
             return state
