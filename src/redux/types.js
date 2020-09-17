@@ -1,10 +1,15 @@
 export const SET_CURRENTDATE      = 'APP/SET_CURRENTDATE';
+
+export const SET_CURRENTMONTH     = 'APP/SET_CURRENTMONTH'
+
 export const EDIT_EVENT           = 'APP/EDIT_EVENT';
 export const ADD_EVENT            = 'APP/ADD_EVENT';
+
+export const FETCH_EVENTS_REQUEST      = 'APP/FETCH_EVENTS_REQUEST';
+export const FETCH_EVENTS_FAILURE      = 'APP/FETCH_EVENTS_FAILURE';
+export const FETCH_EVENTS_SUCCESS      = 'APP/FETCH_EVENTS_SUCCESS';
 
 export const LOGIN_SUCCESS       = 'USER/LOGIN_SUCCESS';
 export const LOGIN_REQUEST       = 'USER/LOGIN_REQUEST';
 export const LOGIN_FAILURE       = 'USER/LOGIN_FAILURE';
-
-
 

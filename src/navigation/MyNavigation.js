@@ -14,7 +14,7 @@ const StackNavigator = ({isLoggedIn}) => {
   
   console.log('isLoggedIn - stack',isLoggedIn);
 
-  return isLoggedIn ? (
+  return !isLoggedIn ? (
     <Stack.Navigator>
       
       <Stack.Screen name="Calendar" component={CalendarScreen} />

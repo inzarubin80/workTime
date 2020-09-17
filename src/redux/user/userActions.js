@@ -36,7 +36,9 @@ export const login = (username, password) => {
       .then(response => response.json())
       .then((json) => {
         if (json.msg === 'success') { 
+          
           dispatch(setLoginSuccess({ username:username, password:password})); 
+
         } else {
           
           dispatch(setLoginFailure({ username:username, password:password})); 

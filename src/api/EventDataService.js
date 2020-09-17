@@ -1,16 +1,54 @@
-import axios from 'axios'
-import {API_URL } from '../../Constants'
+import { API_URL } from '../Constants'
+import { useSelector } from 'react-redux';
+import { encode } from 'base-64'
 
-class EventDataService {
-  retrieveAllEvents(beginningPeriod, endPeriod) {
-        return axios.get(`${API_URL}/items`, 
+
+const Header = () => {
+
+    const username = useSelector(state => state.user.username);
+    const password = useSelector(state => state.user.password);
+
+    return new Headers({
+        'Authorization': 'Basic ' + encode(username + ":" + password),
+        'Content-Type': 'application/json'
+    })
+}
+
+
+export const getEvents = (beginningPeriod, endPeriod) => {
+  return fetch(`${API_URL}/?typerequest=events&beginningPeriod=${beginningPeriod}&endPeriod=${endPeriod}`,
         {
+            method: 'get',
+            headers: Header(),
+        })
+    ;
+}
+
+/*
+import const retrieveAllEvents = (beginningPeriod, endPeriod) => {
+    return axios.get(`${API_URL}/items`,
+        {
+
             params: {
                 'typerequest': 'events',
                 'beginningPeriod': '15.12.2015 20:42:22',
-                'endPeriod':'15.12.2020 20:42:22' 
-              }
-          });
+                'endPeriod': '15.12.2020 20:42:22'
+            }
+        });
+}
+
+
+class EventDataService {
+    retrieveAllEvents(beginningPeriod, endPeriod) {
+        return axios.get(`${API_URL}/items`,
+            {
+
+                params: {
+                    'typerequest': 'events',
+                    'beginningPeriod': '15.12.2015 20:42:22',
+                    'endPeriod': '15.12.2020 20:42:22'
+                }
+            });
     }
 
     retrieveEvent(name, id) {
@@ -32,3 +70,4 @@ class EventDataService {
 }
 
 export default new EventDataService()
+*/

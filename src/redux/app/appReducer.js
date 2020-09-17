@@ -1,10 +1,14 @@
-import { SET_CURRENTDATE, EDIT_EVENT, ADD_EVENT} from '../types'
+import { SET_CURRENTDATE, EDIT_EVENT, ADD_EVENT, FETCH_EVENTS_SUCCESS, SET_CURRENTMONTH} from '../types'
 import { EVENTS_DATA } from '../../data/dummy-data'
 
 const initialState = {
+
     EVENTS: EVENTS_DATA,
     currentDate: new Date(),
+    currentMonth: new Date(),
+
     currentId: 2,
+
 };
 
 export default (state = initialState, action) => {
@@ -16,6 +20,13 @@ export default (state = initialState, action) => {
                 currentDate: action.payload
             })
         }
+
+        case SET_CURRENTMONTH: {
+            return Object.assign({}, state, {
+                currentMonth: action.payload
+            })
+        }
+
         case EDIT_EVENT: {
 
             return Object.assign({}, state, {
@@ -51,6 +62,10 @@ export default (state = initialState, action) => {
 
             )
         }
+
+        case FETCH_EVENTS_SUCCESS: return {
+            ...state, EVENTS:payload
+        };
 
         default:
 

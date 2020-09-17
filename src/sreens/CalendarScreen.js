@@ -16,7 +16,7 @@ import {
 import { Button } from 'react-native-elements';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux'
-import { setCurrentDate } from '../redux/app/appActions'
+import { setCurrentDate, setCurrentMonth } from '../redux/app/appActions'
 
 import EventList from '../components/EventList'
 
@@ -43,13 +43,12 @@ const CalendarScreen = ({ navigation }) => {
     });
   }, [navigation, currentDate]);
 
-
   onDateChanged = (date) => {
     dispatch(setCurrentDate(date));
   };
 
-  onMonthChange = (/* month, updateSource */) => {
-    // console.warn('ExpandableCalendarScreen onMonthChange: ', month, updateSource);
+  onMonthChange = (month) => {
+    dispatch(setCurrentMonth(month));
   };
 
   const renderEmptyItem = () => {
