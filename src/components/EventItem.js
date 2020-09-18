@@ -13,7 +13,7 @@ const EventItem = props => {
     <View style={styles.mealItem}>
       <TouchableOpacity onPress={props.onSelectEvent}>
 
-      
+    
 
           <ListItem bottomDivider>
             <Icon name='rowing' />

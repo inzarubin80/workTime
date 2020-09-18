@@ -8,8 +8,7 @@ export const getHash = (username, password) => {
 
 export const executeAuthenticationService = (hash) => {
 
-    console.log(hash);
-
+    
     return fetch(`${API_URL}/?typerequest=authenticate`,
         {
             method: 'get',

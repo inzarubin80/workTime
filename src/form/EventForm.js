@@ -14,16 +14,15 @@ const EventScreen = ({ route, navigation }) => {
 
     let initialobj;
 
-    if (eventId == '-1') {
-        initialobj = { id: '-1', date: route.params.currentDate, summary: '', title: '', duration: '' };
+    if (eventId == '') {
+        initialobj = { id: '', date: route.params.currentDate, summary: '', title: '', duration: '', number: ''};
     }
     else {
-        initialobj = useSelector(state => state.app.EVENTS.find((event) => event.id === eventId));
+        initialobj = useSelector(state => state.app.events.find((event) => event.id === eventId));
     }
 
     return (
         <ScrollView>
-
 
             <KeyboardAvoidingView
                 style={styles.container} behavior='position' >
@@ -51,9 +50,9 @@ const EventScreen = ({ route, navigation }) => {
 
                             <Input
                                 placeholder="Номер"
-                                value={values.id}
-                                onChangeText={handleChange('id')}
-                                onBlur={handleBlur('id')}
+                                value={values.number}
+                                onChangeText={handleChange('number')}
+                                onBlur={handleBlur('number')}
                                 disabled={true}
                                 label='Номер'
                             />

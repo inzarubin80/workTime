@@ -61,39 +61,6 @@ const setEventsFailure = () => {
 };
 
 
-/*
-export const getEventsDispatch =  (beginningPeriod, endPeriod) => {
-  
-  return  (dispatch, getState) => {  
-
-    const hash = getState().user.hash;
-
-    dispatch(setEventsRequest()); 
-    
-    return getEvents(beginningPeriod, endPeriod, hash)
-      .then(response => response.text())
-      .then(text => text.trim())
-      .then(textTrim =>  JSON.parse(textTrim))
-      .then((json) => {
-      
-    console.log('json');
-      console.log('Data ====' + json[0].date);
-      console.log('Тип ===========' + typeof  json);
-      console.log('Тип =========== []' + typeof  []);
-      
-      dispatch(setEventsSuccess(json));     
-      })
-      .catch((err) => {   
-        dispatch(setEventsFailure()); 
-        console.log(err);
-      });
-    };
-  
-}
-
-*/
-
-
 export const getEventsDispatch =  (beginningPeriod, endPeriod) => {
   
   return  (dispatch, getState) => {  
