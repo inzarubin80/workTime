@@ -34,7 +34,7 @@ const EventScreen = ({ route, navigation }) => {
                     onSubmit={
                         (values) => {
 
-                            if (initialobj.id == '-1') {
+                            if (initialobj.id == '') {
                                 dispatch(addEvent(values))
                             }
                             else {

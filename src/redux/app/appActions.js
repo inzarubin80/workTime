@@ -60,9 +60,14 @@ const setEventsFailure = () => {
   };
 };
 
-export const getEventsService = (beginningPeriod, endPeriod) => {
-  return (dispatch) => {  
+export const getEventsDispatch = (beginningPeriod, endPeriod) => {
+  
+  console.log('старт getEventsDispatch');
+
+  return  dispatch => {  
+    
     dispatch(setEventsRequest()); 
+    /*
     return getEvents(beginningPeriod, endPeriod)
       .then(response => response.json())
       .then((json) => {
@@ -72,5 +77,7 @@ export const getEventsService = (beginningPeriod, endPeriod) => {
         dispatch(setEventsFailure()); 
         console.log(err);
       });
-  };
+  */
+    };
+  
 }

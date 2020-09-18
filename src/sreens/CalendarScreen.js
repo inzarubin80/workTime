@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Platform,
   StyleSheet,
@@ -16,7 +16,7 @@ import {
 import { Button } from 'react-native-elements';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux'
-import { setCurrentDate, setCurrentMonth } from '../redux/app/appActions'
+import { setCurrentDate, setCurrentMonth, getEventsDispatch } from '../redux/app/appActions'
 
 import EventList from '../components/EventList'
 
@@ -24,7 +24,45 @@ const CalendarScreen = ({ navigation }) => {
 
   const EVENTS = useSelector(state => state.app.EVENTS);
   const currentDate = useSelector(state => state.app.currentDate);
+  const currentMonth = useSelector(state => state.app.currentMonth);
+
   const dispatch = useDispatch()
+
+
+  React.useEffect(() => {
+  
+    const startOfMonth = moment(currentMonth.dateString).startOf('month').format('YYYYMMDDhhmm');
+    const endOfMonth = moment(currentMonth.dateString).endOf('month').format('YYYYMMDDhhmm');
+    console.log('startOfMonth---' + startOfMonth);
+    console.log('endOfMonth---' + endOfMonth);
+    dispatch(getEventsDispatch(startOfMonth, endOfMonth));
+  }, [currentMonth]);
+
+  
+  /*
+  useEffect( () => {
+    const fetchData =  async () => {
+      const startOfMonth = moment(currentMonth.dateString).startOf('month').format('YYYYMMDDhhmm');
+      const endOfMonth = moment(currentMonth.dateString).endOf('month').format('YYYYMMDDhhmm');
+      console.log('startOfMonth' + startOfMonth);
+      console.log('endOfMonth' + endOfMonth);
+      dispatch(getEventsDispatch(startOfMonth, endOfMonth));
+    }
+    fetchData();
+  }, [dispatch]);
+  */
+
+/*
+  useEffect(() => {
+    
+    const startOfMonth = moment(currentMonth.dateString).startOf('month').format('YYYYMMDDhhmm');
+    const endOfMonth = moment(currentMonth.dateString).endOf('month').format('YYYYMMDDhhmm');
+
+    dispatch(getEventsDispatch(startOfMonth, endOfMonth))
+ }, [dispatch, currentMonth])
+
+*/
+
 
 
   React.useLayoutEffect(() => {
@@ -34,10 +72,10 @@ const CalendarScreen = ({ navigation }) => {
         <Button
           title="Добавить"
           onPress={() => {
-            navigation.navigate('EventForm',{eventId: '-1', currentDate:currentDate}
+            navigation.navigate('EventForm', { eventId: '', currentDate: currentDate }
             )
           }
-        }
+          }
         />
       ),
     });
@@ -48,7 +86,9 @@ const CalendarScreen = ({ navigation }) => {
   };
 
   onMonthChange = (month) => {
+
     dispatch(setCurrentMonth(month));
+
   };
 
   const renderEmptyItem = () => {
