@@ -1,13 +1,11 @@
-import { SET_CURRENTDATE, EDIT_EVENT, ADD_EVENT, FETCH_EVENTS_SUCCESS, SET_CURRENTMONTH} from '../types'
-import { EVENTS_DATA } from '../../data/dummy-data'
+import { SET_CURRENTDATE, EDIT_EVENT, ADD_EVENT, FETCH_EVENTS_SUCCESS, SET_CURRENTMONTH } from '../types'
 
 const initialState = {
 
-    EVENTS: EVENTS_DATA,
-    currentDate: new Date(),
-    currentMonth: new Date(),
-
-    currentId: 2,
+    events: [],
+    currentDate: '',
+    currentMonth: '',
+    currentId: 0,
 
 };
 
@@ -63,10 +61,13 @@ export default (state = initialState, action) => {
             )
         }
 
-        case FETCH_EVENTS_SUCCESS: return {
-            ...state, EVENTS:payload
-        };
+        case FETCH_EVENTS_SUCCESS:
 
+            console.log('payload  ====+++======' + action.payload);
+        
+            return { ...state, events:action.payload}
+
+            
         default:
 
             return state

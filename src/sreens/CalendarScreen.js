@@ -23,41 +23,16 @@ import EventList from '../components/EventList'
 
 import { login } from '../redux/user/userActions';
 
-const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEventsDispatch, EVENTS, currentDate, currentMonth, login }) => {
+const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEventsDispatch, events, currentDate, currentMonth, login }) => {
 
-  /*
 
  React.useEffect(() => {
    const startOfMonth = moment(currentMonth.dateString).startOf('month').format('YYYYMMDDhhmm');
    const endOfMonth = moment(currentMonth.dateString).endOf('month').format('YYYYMMDDhhmm');
-   console.log('startOfMonth---' + startOfMonth);
-   console.log('endOfMonth---' + endOfMonth);
    getEventsDispatch(startOfMonth, endOfMonth);
-
  }, [currentMonth]);
  
- useEffect( () => {
-   const fetchData =  async () => {
-     const startOfMonth = moment(currentMonth.dateString).startOf('month').format('YYYYMMDDhhmm');
-     const endOfMonth = moment(currentMonth.dateString).endOf('month').format('YYYYMMDDhhmm');
-     console.log('startOfMonth' + startOfMonth);
-     console.log('endOfMonth' + endOfMonth);
-     dispatch(getEventsDispatch(startOfMonth, endOfMonth));
-   }
-   fetchData();
- }, [dispatch]);
  
-
-   useEffect(() => {
-     
-     const startOfMonth = moment(currentMonth.dateString).startOf('month').format('YYYYMMDDhhmm');
-     const endOfMonth = moment(currentMonth.dateString).endOf('month').format('YYYYMMDDhhmm');
- 
-     dispatch(getEventsDispatch(startOfMonth, endOfMonth))
-  }, [dispatch, currentMonth])
- 
- */
-
   React.useLayoutEffect(() => {
     navigation.setOptions({
 
@@ -112,14 +87,17 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
   };
 
 
-  const EVENTS_Day = EVENTS.filter(
-    (event) => {
+  events.map((item)=>{console.log('date---цикл' + item.date)})
+
+  
+  const eventsCarrentDate = events.filter(
+    (event) => {    
       return moment(event.date).isSame(currentDate, 'day')
+    
     }
   );
 
-
-  const getTheme = () => {
+    const getTheme = () => {
     const themeColor = '#0059ff';
     const lightThemeColor = '#e6efff';
     const disabledColor = '#a6acb1';
@@ -196,28 +174,11 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
       <EventList
 
 
-        //events={EVENTS.filter(event => moment(event.date).isSame(currentDate, 'day'))}
         navigation={navigation}
-        events={EVENTS_Day}
+        events={eventsCarrentDate}
 
-      // events={EVENTS}
-
-
-      // scrollToFirst={true}
-      // start={0}
-      // end={24}
       />
-
-
-      <Button title='Обновить бля' onPress={() => {
-
-        const startOfMonth = moment(currentMonth.dateString).startOf('month').format('YYYYMMDDhhmm');
-        const endOfMonth = moment(currentMonth.dateString).endOf('month').format('YYYYMMDDhhmm');
-        getEventsDispatch(startOfMonth, endOfMonth)
-        //login('Z', '');
-
-      }} />
-
+      
     </CalendarProvider>
   )
 }
@@ -273,7 +234,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    EVENTS: state.app.EVENTS,
+    events: state.app.events,
     currentDate: state.app.currentDate,
     currentMonth: state.app.currentMonth,
   }

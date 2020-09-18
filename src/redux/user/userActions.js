@@ -4,9 +4,7 @@ import {
   LOGIN_FAILURE
 } from '../types'
 
-import {executeAuthenticationService} from '../../api/AuthenticationService';
-
-
+import {executeAuthenticationService, getHash} from '../../api/EventDataService';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const setLoginSuccess = (loginData) => {
@@ -33,20 +31,23 @@ const setLoginFailure = (loginData) => {
 export const login = (username, password) => {
   return (dispatch) => {  
     
-    dispatch(setLoginRequest({username:username, password:password})); 
+    hash = getHash(username, password);
 
-    return executeAuthenticationService(username, password)
+    const loginData = { username:username, password:password, hash:hash};
+
+    dispatch(setLoginRequest(loginData)); 
+
+    return executeAuthenticationService(hash)
       .then(response => response.json())
       .then((json) => {
         if (json.msg === 'success') { 
           
-          setLoginLocal(username, password);
-          
-          dispatch(setLoginSuccess({ username:username, password:password})); 
+          setLoginLocal(username, password, hash);
+          dispatch(setLoginSuccess(loginData)); 
 
         } else {
           
-          dispatch(setLoginFailure({ username:username, password:password})); 
+          dispatch(setLoginFailure(loginData)); 
 
         }
       })
@@ -59,10 +60,12 @@ export const login = (username, password) => {
 }
 
 
-const setLoginLocal = async (username, password) => {
+const setLoginLocal = async (username, password,) => {
   try {
     await AsyncStorage.setItem('username', username);
-    await AsyncStorage.setItem('password', password); 
+    await AsyncStorage.setItem('password', password);
+    await AsyncStorage.setItem('hash', hash);
+     
   } catch (err) {
     console.log(err);
   }

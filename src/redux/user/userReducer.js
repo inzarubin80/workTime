@@ -1,16 +1,16 @@
-import { LOGIN_SUCCESS, LOGIN_REQUEST } from '../types'
+import { LOGIN_SUCCESS, LOGIN_REQUEST, LOGIN_FAILURE } from '../types'
 
 const initialState = {
     isLoggedIn: false,
     loggingIn: false,
-    username: '',
+    username: 'Z',
     password: '',
+    hash:''
 };
 
 export default (state = initialState, action) => {
 
     switch (action.type) {
-
         case LOGIN_REQUEST:
             return {
                 ...state,
@@ -25,8 +25,15 @@ export default (state = initialState, action) => {
                 ...action.payload,
                 loggingIn: false,
                 isLoggedIn: true,
-
             };
+
+            case LOGIN_FAILURE:
+                return {
+                    ...state,
+                    loggingIn: false,
+                    isLoggedIn: false,
+                };
+        
 
         default:
 

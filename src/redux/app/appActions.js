@@ -40,10 +40,10 @@ export const addEvent = (event) => {
 }
 
 
-const setEventsSuccess = (events) => {
+const setEventsSuccess = (events_) => {
   return {
     type: FETCH_EVENTS_SUCCESS,
-    payload: events,
+    payload: events_,
   };
 };
 
@@ -60,17 +60,56 @@ const setEventsFailure = () => {
   };
 };
 
+
 export const getEventsDispatch =  (beginningPeriod, endPeriod) => {
   
-  console.log('старт getEventsDispatch');
+  return  (dispatch, getState) => {  
 
-  return  dispatch => {  
-    
+    const hash = getState().user.hash;
+
     dispatch(setEventsRequest()); 
     
-    return getEvents(beginningPeriod, endPeriod)
+    return getEvents(beginningPeriod, endPeriod, hash)
+      .then(response => response.text())
+      .then(text => text.trim())
+      .then(textTrim =>  JSON.parse(textTrim))
+      .then((json) => {
+      
+    console.log('json');
+      console.log('Data ====' + json[0].date);
+      console.log('Тип ===========' + typeof  json);
+      console.log('Тип =========== []' + typeof  []);
+      
+      dispatch(setEventsSuccess(json));     
+      })
+      .catch((err) => {   
+        dispatch(setEventsFailure()); 
+        console.log(err);
+      });
+    };
+  
+}
+
+/*
+export const getEventsDispatch =  (beginningPeriod, endPeriod) => {
+  
+  return  (dispatch, getState) => {  
+
+    const hash = getState().user.hash;
+
+    dispatch(setEventsRequest()); 
+    
+    return getEvents(beginningPeriod, endPeriod, hash)
       .then(response => response.json())
       .then((json) => {
+        console.log('json');
+        
+        console.log('Data ====' + json[0].Data);
+
+
+        console.log(json);
+
+
           dispatch(setEventsSuccess(json));     
       })
       .catch((err) => {   
@@ -80,3 +119,4 @@ export const getEventsDispatch =  (beginningPeriod, endPeriod) => {
     };
   
 }
+*/

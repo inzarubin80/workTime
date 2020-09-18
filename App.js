@@ -15,7 +15,7 @@ const logger = store => next => action => {
 }
 
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 const App = ()  => {
   return (<Provider store={store}> 
       <MyNavigation/> 

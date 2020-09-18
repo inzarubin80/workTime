@@ -7,7 +7,7 @@ import { login } from '../redux/user/userActions';
 
 const LoginScreen = () => {
 
-    const [username, setUsername] = useState('');
+    const [username, setUsername] = useState('Z');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
 
