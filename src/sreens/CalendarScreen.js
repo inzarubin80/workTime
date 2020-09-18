@@ -87,8 +87,7 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
   };
 
 
-  events.map((item)=>{console.log('date---цикл' + item.date)})
-
+ 
   
   const eventsCarrentDate = events.filter(
     (event) => {    
@@ -178,7 +177,7 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
         events={eventsCarrentDate}
 
       />
-      
+
     </CalendarProvider>
   )
 }

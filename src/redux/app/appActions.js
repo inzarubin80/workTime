@@ -61,6 +61,7 @@ const setEventsFailure = () => {
 };
 
 
+/*
 export const getEventsDispatch =  (beginningPeriod, endPeriod) => {
   
   return  (dispatch, getState) => {  
@@ -90,7 +91,9 @@ export const getEventsDispatch =  (beginningPeriod, endPeriod) => {
   
 }
 
-/*
+*/
+
+
 export const getEventsDispatch =  (beginningPeriod, endPeriod) => {
   
   return  (dispatch, getState) => {  
@@ -102,15 +105,7 @@ export const getEventsDispatch =  (beginningPeriod, endPeriod) => {
     return getEvents(beginningPeriod, endPeriod, hash)
       .then(response => response.json())
       .then((json) => {
-        console.log('json');
-        
-        console.log('Data ====' + json[0].Data);
-
-
-        console.log(json);
-
-
-          dispatch(setEventsSuccess(json));     
+      dispatch(setEventsSuccess(json));     
       })
       .catch((err) => {   
         dispatch(setEventsFailure()); 
@@ -119,4 +114,4 @@ export const getEventsDispatch =  (beginningPeriod, endPeriod) => {
     };
   
 }
-*/
+
