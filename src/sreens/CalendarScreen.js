@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import React, { useEffect } from 'react';
+import React from 'react';
+
 import {
   Platform,
   StyleSheet,
@@ -13,57 +14,49 @@ import {
   CalendarProvider
 } from 'react-native-calendars';
 
+
+import { setCurrentDate, setCurrentMonth, getEventsDispatch } from '../redux/app/appActions';
 import { Button } from 'react-native-elements';
 import moment from 'moment';
-import { useSelector, useDispatch } from 'react-redux'
-import { setCurrentDate, setCurrentMonth, getEventsDispatch } from '../redux/app/appActions'
-
+import { connect } from 'react-redux'
 import EventList from '../components/EventList'
 
-const CalendarScreen = ({ navigation }) => {
+import { login } from '../redux/user/userActions';
 
-  const EVENTS = useSelector(state => state.app.EVENTS);
-  const currentDate = useSelector(state => state.app.currentDate);
-  const currentMonth = useSelector(state => state.app.currentMonth);
+const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEventsDispatch, EVENTS, currentDate, currentMonth, login }) => {
 
-  const dispatch = useDispatch()
-
-
-  React.useEffect(() => {
-  
-    const startOfMonth = moment(currentMonth.dateString).startOf('month').format('YYYYMMDDhhmm');
-    const endOfMonth = moment(currentMonth.dateString).endOf('month').format('YYYYMMDDhhmm');
-    console.log('startOfMonth---' + startOfMonth);
-    console.log('endOfMonth---' + endOfMonth);
-    dispatch(getEventsDispatch(startOfMonth, endOfMonth));
-  }, [currentMonth]);
-
-  
   /*
-  useEffect( () => {
-    const fetchData =  async () => {
-      const startOfMonth = moment(currentMonth.dateString).startOf('month').format('YYYYMMDDhhmm');
-      const endOfMonth = moment(currentMonth.dateString).endOf('month').format('YYYYMMDDhhmm');
-      console.log('startOfMonth' + startOfMonth);
-      console.log('endOfMonth' + endOfMonth);
-      dispatch(getEventsDispatch(startOfMonth, endOfMonth));
-    }
-    fetchData();
-  }, [dispatch]);
-  */
 
-/*
-  useEffect(() => {
-    
-    const startOfMonth = moment(currentMonth.dateString).startOf('month').format('YYYYMMDDhhmm');
-    const endOfMonth = moment(currentMonth.dateString).endOf('month').format('YYYYMMDDhhmm');
+ React.useEffect(() => {
+   const startOfMonth = moment(currentMonth.dateString).startOf('month').format('YYYYMMDDhhmm');
+   const endOfMonth = moment(currentMonth.dateString).endOf('month').format('YYYYMMDDhhmm');
+   console.log('startOfMonth---' + startOfMonth);
+   console.log('endOfMonth---' + endOfMonth);
+   getEventsDispatch(startOfMonth, endOfMonth);
 
-    dispatch(getEventsDispatch(startOfMonth, endOfMonth))
- }, [dispatch, currentMonth])
+ }, [currentMonth]);
+ 
+ useEffect( () => {
+   const fetchData =  async () => {
+     const startOfMonth = moment(currentMonth.dateString).startOf('month').format('YYYYMMDDhhmm');
+     const endOfMonth = moment(currentMonth.dateString).endOf('month').format('YYYYMMDDhhmm');
+     console.log('startOfMonth' + startOfMonth);
+     console.log('endOfMonth' + endOfMonth);
+     dispatch(getEventsDispatch(startOfMonth, endOfMonth));
+   }
+   fetchData();
+ }, [dispatch]);
+ 
 
-*/
-
-
+   useEffect(() => {
+     
+     const startOfMonth = moment(currentMonth.dateString).startOf('month').format('YYYYMMDDhhmm');
+     const endOfMonth = moment(currentMonth.dateString).endOf('month').format('YYYYMMDDhhmm');
+ 
+     dispatch(getEventsDispatch(startOfMonth, endOfMonth))
+  }, [dispatch, currentMonth])
+ 
+ */
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -82,13 +75,11 @@ const CalendarScreen = ({ navigation }) => {
   }, [navigation, currentDate]);
 
   onDateChanged = (date) => {
-    dispatch(setCurrentDate(date));
+    setCurrentDate(date);
   };
 
   onMonthChange = (month) => {
-
-    dispatch(setCurrentMonth(month));
-
+    setCurrentMonth(month);
   };
 
   const renderEmptyItem = () => {
@@ -218,6 +209,15 @@ const CalendarScreen = ({ navigation }) => {
       />
 
 
+      <Button title='Обновить бля' onPress={() => {
+
+        const startOfMonth = moment(currentMonth.dateString).startOf('month').format('YYYYMMDDhhmm');
+        const endOfMonth = moment(currentMonth.dateString).endOf('month').format('YYYYMMDDhhmm');
+        getEventsDispatch(startOfMonth, endOfMonth)
+        //login('Z', '');
+
+      }} />
+
     </CalendarProvider>
   )
 }
@@ -270,4 +270,17 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CalendarScreen;
+
+const mapStateToProps = state => {
+  return {
+    EVENTS: state.app.EVENTS,
+    currentDate: state.app.currentDate,
+    currentMonth: state.app.currentMonth,
+  }
+}
+
+const mapDispatchToProps = {
+  setCurrentDate, setCurrentMonth, getEventsDispatch,login
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CalendarScreen);

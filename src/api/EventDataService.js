@@ -1,12 +1,13 @@
 import { API_URL } from '../Constants'
-import { useSelector } from 'react-redux';
 import { encode } from 'base-64'
+import AsyncStorage from '@react-native-community/async-storage';
 
+const Header = async  () => {
 
-const Header = () => {
+    const username = await AsyncStorage.getItem('username');
+    const password = await AsyncStorage.getItem('password');
 
-    const username = useSelector(state => state.user.username);
-    const password = useSelector(state => state.user.password);
+    console.log('username' + username);
 
     return new Headers({
         'Authorization': 'Basic ' + encode(username + ":" + password),
@@ -15,7 +16,7 @@ const Header = () => {
 }
 
 
-export const getEvents = (beginningPeriod, endPeriod) => {
+export const  getEvents =  (beginningPeriod, endPeriod) => {
   return fetch(`${API_URL}/?typerequest=events&beginningPeriod=${beginningPeriod}&endPeriod=${endPeriod}`,
         {
             method: 'get',

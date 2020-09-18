@@ -6,6 +6,9 @@ import {
 
 import {executeAuthenticationService} from '../../api/AuthenticationService';
 
+
+import AsyncStorage from '@react-native-community/async-storage';
+
 const setLoginSuccess = (loginData) => {
   return {
     type: LOGIN_SUCCESS,
@@ -37,6 +40,8 @@ export const login = (username, password) => {
       .then((json) => {
         if (json.msg === 'success') { 
           
+          setLoginLocal(username, password);
+          
           dispatch(setLoginSuccess({ username:username, password:password})); 
 
         } else {
@@ -52,3 +57,13 @@ export const login = (username, password) => {
       });
   };
 }
+
+
+const setLoginLocal = async (username, password) => {
+  try {
+    await AsyncStorage.setItem('username', username);
+    await AsyncStorage.setItem('password', password); 
+  } catch (err) {
+    console.log(err);
+  }
+};
