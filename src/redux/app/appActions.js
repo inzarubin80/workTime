@@ -97,14 +97,12 @@ export const getEventsDispatch = (beginningPeriod, endPeriod) => {
 export const saveEventDispatch = (event) => {
 
 
-  console.log('saveEventDispatch');
   return (dispatch, getState) => {
 
     const hash = getState().user.hash;
     dispatch(setFetchSaveRequest());
 
-    console.log(hash);
-
+  
     return saveEvent(event, hash)
       .then(response => response.json())
       .then((json) => {

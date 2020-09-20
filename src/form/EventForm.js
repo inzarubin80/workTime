@@ -10,8 +10,7 @@ const EventScreen = ({ route, navigation }) => {
     const { eventId } = route.params;
     const dispatch = useDispatch();
 
-    console.log('eventId' + eventId);
-
+    
     let initialobj;
 
     if (eventId == '') {

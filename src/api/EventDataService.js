@@ -8,8 +8,6 @@ export const getHash = (username, password) => {
 
 export const executeAuthenticationService = (hash) => {
 
-    console.log('executeAuthenticationService------------------');
-
     
     return fetch(`${API_URL}/?typerequest=authenticate`,
         {
@@ -24,8 +22,7 @@ export const executeAuthenticationService = (hash) => {
 
 export const getEvents = (beginningPeriod, endPeriod, hash) => {
     
-    console.log('getEvents------------------');
-
+    
     return fetch(`${API_URL}/?typerequest=events&beginningPeriod=${beginningPeriod}&endPeriod=${endPeriod}`,
         {
             method: 'get',
@@ -39,10 +36,6 @@ export const getEvents = (beginningPeriod, endPeriod, hash) => {
 
 export const saveEvent = (event, hash) => {
 
-    console.log('saveEvent------------------');
-    console.log(hash);
-    console.log(event);
-    
     return fetch(`${API_URL}/?typerequest=saveEvent`,
         {
             method: 'POST',

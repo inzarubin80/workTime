@@ -45,7 +45,6 @@ export default (state = initialState, action) => {
 
         case ADD_EVENT: {
 
-            console.log('ADD_EVENT');
             return {...state, events:[...state.events, action.payload]}
 
         }
