@@ -28,7 +28,7 @@ export default (state = initialState, action) => {
         case EDIT_EVENT: {
 
             return Object.assign({}, state, {
-                EVENTS: state.EVENTS.map(event => {
+                events: state.events.map(event => {
                     if (event.id !== action.payload.id) {
                         return event
                     }
@@ -44,29 +44,15 @@ export default (state = initialState, action) => {
         }
 
         case ADD_EVENT: {
-            return Object.assign({}, state, {
-                EVENTS: state.EVENTS.concat({
-                    id: (state.currentId + 1).toString(),
-                    date: action.payload.date,
-                    title: action.payload.title,
-                    duration: action.payload.duration,
-                    summary: action.payload.summary
-                })
-            },
 
-                {
-                    currentId: state.currentId + 1
-                }
+            console.log('ADD_EVENT');
+            return {...state, events:[...state.events, action.payload]}
 
-            )
         }
 
         case FETCH_EVENTS_SUCCESS:
 
-            console.log('payload  ====+++======' + action.payload);
-        
             return { ...state, events:action.payload}
-
             
         default:
 

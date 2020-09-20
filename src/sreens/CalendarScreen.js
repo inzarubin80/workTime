@@ -25,7 +25,6 @@ import { login } from '../redux/user/userActions';
 
 const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEventsDispatch, events, currentDate, currentMonth, login }) => {
 
-
  React.useEffect(() => {
    const startOfMonth = moment(currentMonth.dateString).startOf('month').format('YYYYMMDDhhmm');
    const endOfMonth = moment(currentMonth.dateString).endOf('month').format('YYYYMMDDhhmm');
@@ -90,7 +89,10 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
  
   
   const eventsCarrentDate = events.filter(
-    (event) => {    
+    (event) => { 
+      console.log('event.date  ' + event.date);  
+      console.log('event.title ' + event.title);  
+       
       return moment(event.date).isSame(currentDate, 'day')
     
     }

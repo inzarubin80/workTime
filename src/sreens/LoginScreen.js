@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { Input, Button } from 'react-native-elements';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/user/userActions';
 

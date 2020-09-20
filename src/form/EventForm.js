@@ -3,7 +3,7 @@ import { Button, TextInput, View, KeyboardAvoidingView, Platform, StyleSheet, Ke
 import { Formik } from 'formik';
 import { Input } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux'
-import { changeEvent, addEvent } from '../redux/app/appActions'
+import { saveEventDispatch } from '../redux/app/appActions'
 
 const EventScreen = ({ route, navigation }) => {
 
@@ -15,7 +15,7 @@ const EventScreen = ({ route, navigation }) => {
     let initialobj;
 
     if (eventId == '') {
-        initialobj = { id: '', date: route.params.currentDate, summary: '', title: '', duration: '', number: ''};
+        initialobj = { id: '', date: route.params.currentDate, summary: '', title: '', duration: '', number: '' };
     }
     else {
         initialobj = useSelector(state => state.app.events.find((event) => event.id === eventId));
@@ -32,13 +32,7 @@ const EventScreen = ({ route, navigation }) => {
                     initialValues={initialobj}
                     onSubmit={
                         (values) => {
-
-                            if (initialobj.id == '') {
-                                dispatch(addEvent(values))
-                            }
-                            else {
-                                dispatch(changeEvent(values))
-                            }
+                            dispatch(saveEventDispatch(values))
                             navigation.goBack();
                         }
                     }
@@ -47,19 +41,31 @@ const EventScreen = ({ route, navigation }) => {
 
                         <View>
 
-
+      
                             <Input
                                 placeholder="Номер"
-                                value={values.number}
-                                onChangeText={handleChange('number')}
-                                onBlur={handleBlur('number')}
+                                value={values.number.toString()}
+                                //keyboardType='numeric'
+                                //onChangeText={handleChange('number')}
+                                //onBlur={handleBlur('number')}
                                 disabled={true}
                                 label='Номер'
                             />
+                            
+
+                            <Input
+                                placeholder="id"
+                                value={values.id.toString()}
+                                onChangeText={handleChange('id')}
+                                onBlur={handleBlur('id')}
+                                disabled={true}
+                                label='id'
+                            />
+                             
 
                             <Input
                                 placeholder="Дата"
-                                value={values.date}
+                                value={values.date.toString()}
                                 onChangeText={handleChange('date')}
                                 onBlur={handleBlur('date')}
                                 label='Дата'
@@ -67,7 +73,7 @@ const EventScreen = ({ route, navigation }) => {
 
                             <Input
                                 placeholder="Заголовок"
-                                value={values.title}
+                                value={values.title.toString()}
                                 onChangeText={handleChange('title')}
                                 onBlur={handleBlur('title')}
                                 label='Заголовок'
@@ -80,7 +86,7 @@ const EventScreen = ({ route, navigation }) => {
                                 placeholder="Описание"
                                 onChangeText={handleChange('summary')}
                                 onBlur={handleBlur('summary')}
-                                value={values.summary}
+                                value={values.summary.toString()}
                                 label='Описание'
                                 multiline={true}
                                 blurOnSubmit={true}
@@ -94,12 +100,10 @@ const EventScreen = ({ route, navigation }) => {
                                 placeholder="Количество часов"
                                 onChangeText={handleChange('duration')}
                                 onBlur={handleBlur('duration')}
-                                value={values.duration}
+                                value={values.duration.toString()}
                                 keyboardType='numeric'
                                 label='Количество часов'
                             />
-
-
 
                             <Button onPress={handleSubmit} title="ОК" />
                         </View>
@@ -108,10 +112,8 @@ const EventScreen = ({ route, navigation }) => {
                 </Formik>
             </KeyboardAvoidingView>
         </ScrollView>
-
     )
 };
-
 
 const styles = StyleSheet.create({
     container: {
