@@ -1,16 +1,29 @@
 import React from 'react';
-import { Button, TextInput, View, KeyboardAvoidingView, Platform, StyleSheet, Keyboard, ScrollView } from 'react-native';
+import { Button, TextInput, View, KeyboardAvoidingView, Platform, StyleSheet, Keyboard, ScrollView, Text } from 'react-native';
 import { Formik } from 'formik';
 import { Input } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux'
 import { saveEventDispatch } from '../redux/app/appActions'
+import RNSelect from 'react-native-select-awesome';
+
+
+const LANGS = [
+    { id: 1, label: 'Java', value: 'java' },
+    { id: 2, label: 'JavaScript', value: 'js' },
+    { id: 3, label: 'Python', value: 'py' },
+    { id: 4, label: 'C', value: 'c' },
+    { id: 5, label: 'PHP', value: 'php' },
+];
+
+
+const itemCustom = {color: '#146eff' };
 
 const EventScreen = ({ route, navigation }) => {
 
     const { eventId } = route.params;
     const dispatch = useDispatch();
 
-    
+
     let initialobj;
 
     if (eventId == '') {
@@ -40,7 +53,7 @@ const EventScreen = ({ route, navigation }) => {
 
                         <View>
 
-      
+
                             <Input
                                 placeholder="Номер"
                                 value={values.number.toString()}
@@ -50,7 +63,8 @@ const EventScreen = ({ route, navigation }) => {
                                 disabled={true}
                                 label='Номер'
                             />
-                            
+
+
 
                             <Input
                                 placeholder="id"
@@ -60,7 +74,7 @@ const EventScreen = ({ route, navigation }) => {
                                 disabled={true}
                                 label='id'
                             />
-                             
+
 
                             <Input
                                 placeholder="Дата"
@@ -95,6 +109,17 @@ const EventScreen = ({ route, navigation }) => {
                             />
 
 
+                            <RNSelect
+                                datas={LANGS}
+                                placeholder="Контрагент"
+                                height={60}
+                                styleItem={itemCustom}
+                               // onChangeText = {(value)=>{console.log(value)}}
+                                //label = {'java'}
+
+
+                            />
+
                             <Input
                                 placeholder="Количество часов"
                                 onChangeText={handleChange('duration')}
@@ -103,6 +128,8 @@ const EventScreen = ({ route, navigation }) => {
                                 keyboardType='numeric'
                                 label='Количество часов'
                             />
+
+
 
                             <Button onPress={handleSubmit} title="ОК" />
                         </View>
