@@ -1,0 +1,56 @@
+{
+  "_from": "react-native-select-awesome",
+  "_id": "react-native-select-awesome@0.1.3",
+  "_inBundle": false,
+  "_integrity": "sha512-c4YAcFYcQ+nFu3ZtYMxddhsknM+/cSYLKK6C/q4wxb95u2P+hS+sofhdlcYBAqfwum/YH2XvbtbFYLBaYmkEbQ==",
+  "_location": "/react-native-select-awesome",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "react-native-select-awesome",
+    "name": "react-native-select-awesome",
+    "escapedName": "react-native-select-awesome",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-native-select-awesome/-/react-native-select-awesome-0.1.3.tgz",
+  "_shasum": "f25c4512d5047828397d3cdbb7e03f73779349ef",
+  "_spec": "react-native-select-awesome",
+  "_where": "F:\\WorkTime\\workTime",
+  "author": {
+    "name": "TuanTVK"
+  },
+  "bugs": {
+    "url": "https://github.com/tuantvk/react-native-select-awesome/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {},
+  "deprecated": false,
+  "description": "react native select awesome for Android and iOS",
+  "devDependencies": {},
+  "homepage": "https://github.com/tuantvk/react-native-select-awesome#readme",
+  "keywords": [
+    "react native select",
+    "react native select awesome",
+    "react native",
+    "react",
+    "react native picker",
+    "react picker",
+    "react select"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "react-native-select-awesome",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuantvk/react-native-select-awesome.git",
+    "issues": "https://github.com/tuantvk/react-native-select-awesome/issues"
+  },
+  "version": "0.1.3"
+}
