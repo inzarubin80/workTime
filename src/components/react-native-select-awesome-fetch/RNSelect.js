@@ -70,10 +70,19 @@ export class RNSelect extends React.PureComponent {
   }
 
   _selectValue = select => {
+    
+
+    console.log('_selectValue')
+
+    console.log('this.props.label' + this.props.label);
+    console.log('select[this.props.label]' + select[this.props.label]);
+
+
     this.setState({
       select,
       searchText: select[this.props.label]
     });
+
     this._textInput.blur();
     this.props.selectValue(select);
   }

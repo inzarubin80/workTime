@@ -85,6 +85,7 @@ const EventScreen = ({ route, navigation }) => {
                             datasFunction={getPartners}
                             requestParameters={{ hash }}
                             notFind='Не найдены элементы справочника'
+                            label = 'label'
 
                         // onChangeText = {(value)=>{console.log(value)}}
                         //label = {'java'}
