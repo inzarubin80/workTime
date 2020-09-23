@@ -212,7 +212,7 @@ RNSelect.propTypes = {
 
 const styles = StyleSheet.create({
   select: {
-    zIndex: 99,
+   zIndex: 99,
   },
   row: {
     flexDirection: 'row',

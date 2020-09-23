@@ -50,9 +50,8 @@ const EventScreen = ({ route, navigation }) => {
 
                 <ScrollView>
 
-                    <KeyboardAvoidingView
-                        style={styles.container} behavior='position' >
-
+{/*                    <KeyboardAvoidingView
+                        style={styles.container} behavior='position' >*/}
 
 
 
@@ -80,11 +79,9 @@ const EventScreen = ({ route, navigation }) => {
 
 
                         <RNSelect
-
                             placeholder="Контрагент"
                             height={60}
                             styleItem={itemCustom}
-
                             datasFunction={getPartners}
                             requestParameters={{ hash }}
                             notFind='Не найдены элементы справочника'
@@ -126,8 +123,6 @@ const EventScreen = ({ route, navigation }) => {
                         />
 
 
-
-
                         <Input
                             placeholder="Количество часов"
                             onChangeText={handleChange('duration')}
@@ -140,7 +135,10 @@ const EventScreen = ({ route, navigation }) => {
 
 
                         <Button onPress={handleSubmit} title="ОК" />
-                    </KeyboardAvoidingView>
+                    
+                    {/*</KeyboardAvoidingView>*/}
+
+
                 </ScrollView>
             )}
 
