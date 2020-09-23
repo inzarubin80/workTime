@@ -4,19 +4,13 @@ import { Formik } from 'formik';
 import { Input } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux'
 import { saveEventDispatch } from '../redux/app/appActions'
-import RNSelect from 'react-native-select-awesome';
+import RNSelect from '../components/react-native-select-awesome-fetch';
+
+import { getPartners } from '../api/EventDataService'
 
 
-const LANGS = [
-    { id: 1, label: 'Java', value: 'java' },
-    { id: 2, label: 'JavaScript', value: 'js' },
-    { id: 3, label: 'Python', value: 'py' },
-    { id: 4, label: 'C', value: 'c' },
-    { id: 5, label: 'PHP', value: 'php' },
-];
 
-
-const itemCustom = {color: '#146eff' };
+const itemCustom = { color: '#146eff' };
 
 const EventScreen = ({ route, navigation }) => {
 
@@ -33,111 +27,125 @@ const EventScreen = ({ route, navigation }) => {
         initialobj = useSelector(state => state.app.events.find((event) => event.id === eventId));
     }
 
+    const hash = useSelector(state => state.user.hash);
+
+    console.log('hash ' + hash);
+
     return (
-        <ScrollView>
-
-            <KeyboardAvoidingView
-                style={styles.container} behavior='position' >
-
-                <Formik
-
-                    initialValues={initialobj}
-                    onSubmit={
-                        (values) => {
-                            dispatch(saveEventDispatch(values))
-                            navigation.goBack();
-                        }
-                    }
-                >
-                    {({ handleChange, handleBlur, handleSubmit, values }) => (
-
-                        <View>
 
 
-                            <Input
-                                placeholder="Номер"
-                                value={values.number.toString()}
-                                //keyboardType='numeric'
-                                //onChangeText={handleChange('number')}
-                                //onBlur={handleBlur('number')}
-                                disabled={true}
-                                label='Номер'
-                            />
+        <Formik
+
+            initialValues={initialobj}
+            onSubmit={
+                (values) => {
+                    dispatch(saveEventDispatch(values))
+                    navigation.goBack();
+                }
+            }
+        >
+            {({ handleChange, handleBlur, handleSubmit, values }) => (
 
 
 
-                            <Input
-                                placeholder="id"
-                                value={values.id.toString()}
-                                onChangeText={handleChange('id')}
-                                onBlur={handleBlur('id')}
-                                disabled={true}
-                                label='id'
-                            />
+                <ScrollView>
 
-
-                            <Input
-                                placeholder="Дата"
-                                value={values.date.toString()}
-                                onChangeText={handleChange('date')}
-                                onBlur={handleBlur('date')}
-                                label='Дата'
-                            />
-
-                            <Input
-                                placeholder="Заголовок"
-                                value={values.title.toString()}
-                                onChangeText={handleChange('title')}
-                                onBlur={handleBlur('title')}
-                                label='Заголовок'
-
-                            />
+                    <KeyboardAvoidingView
+                        style={styles.container} behavior='position' >
 
 
 
-                            <Input
-                                placeholder="Описание"
-                                onChangeText={handleChange('summary')}
-                                onBlur={handleBlur('summary')}
-                                value={values.summary.toString()}
-                                label='Описание'
-                                multiline={true}
-                                blurOnSubmit={true}
-                                onSubmitEditing={() => { Keyboard.dismiss() }}
 
 
-                            />
-
-
-                            <RNSelect
-                                datas={LANGS}
-                                placeholder="Контрагент"
-                                height={60}
-                                styleItem={itemCustom}
-                               // onChangeText = {(value)=>{console.log(value)}}
-                                //label = {'java'}
-
-
-                            />
-
-                            <Input
-                                placeholder="Количество часов"
-                                onChangeText={handleChange('duration')}
-                                onBlur={handleBlur('duration')}
-                                value={values.duration.toString()}
-                                keyboardType='numeric'
-                                label='Количество часов'
-                            />
+                        <Input
+                            placeholder="Номер"
+                            value={values.number.toString()}
+                            //keyboardType='numeric'
+                            //onChangeText={handleChange('number')}
+                            //onBlur={handleBlur('number')}
+                            disabled={true}
+                            label='Номер'
+                        />
 
 
 
-                            <Button onPress={handleSubmit} title="ОК" />
-                        </View>
-                    )}
+                        <Input
+                            placeholder="id"
+                            value={values.id.toString()}
+                            onChangeText={handleChange('id')}
+                            onBlur={handleBlur('id')}
+                            disabled={true}
+                            label='id'
+                        />
 
-                </Formik>
-            </KeyboardAvoidingView>
-        </ScrollView>
+
+                        <RNSelect
+
+                            placeholder="Контрагент"
+                            height={60}
+                            styleItem={itemCustom}
+
+                            datasFunction={getPartners}
+                            requestParameters={{ hash }}
+                            notFind='Не найдены элементы справочника'
+
+                        // onChangeText = {(value)=>{console.log(value)}}
+                        //label = {'java'}
+
+
+                        />
+
+                        <Input
+                            placeholder="Дата"
+                            value={values.date.toString()}
+                            onChangeText={handleChange('date')}
+                            onBlur={handleBlur('date')}
+                            label='Дата'
+                        />
+
+                        <Input
+                            placeholder="Заголовок"
+                            value={values.title.toString()}
+                            onChangeText={handleChange('title')}
+                            onBlur={handleBlur('title')}
+                            label='Заголовок'
+
+                        />
+
+
+
+                        <Input
+                            placeholder="Описание"
+                            onChangeText={handleChange('summary')}
+                            onBlur={handleBlur('summary')}
+                            value={values.summary.toString()}
+                            label='Описание'
+                            multiline={true}
+                            blurOnSubmit={true}
+                            onSubmitEditing={() => { Keyboard.dismiss() }}
+                        />
+
+
+
+
+                        <Input
+                            placeholder="Количество часов"
+                            onChangeText={handleChange('duration')}
+                            onBlur={handleBlur('duration')}
+                            value={values.duration.toString()}
+                            keyboardType='numeric'
+                            label='Количество часов'
+                        />
+
+
+
+                        <Button onPress={handleSubmit} title="ОК" />
+                    </KeyboardAvoidingView>
+                </ScrollView>
+            )}
+
+        </Formik>
+
     )
 };
 

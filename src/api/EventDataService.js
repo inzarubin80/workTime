@@ -20,6 +20,19 @@ export const executeAuthenticationService = (hash) => {
         ;
 }
 
+
+export const getPartners = ({searchText, hash}) => {
+    return fetch(`${API_URL}/?typerequest=referencesPartners&searchText=${searchText}`,
+        {
+            method: 'get',
+            headers: new Headers({
+                'Authorization': hash,
+                'Content-Type': 'application/json'
+            })
+        })
+        ;
+}
+
 export const getEvents = (beginningPeriod, endPeriod, hash) => {
     
     

@@ -28,7 +28,7 @@ export class RNSelect extends React.PureComponent {
       isPicker: false,
       select: {},
       searchText: '',
-      datas: props.datas,
+      datas:[]
     }
   }
 
@@ -78,20 +78,23 @@ export class RNSelect extends React.PureComponent {
     this.props.selectValue(select);
   }
 
-  _changeText = searchText => {
-    const { datas, label } = this.props;
-    let dataSearch = [];
-    datas.forEach(x => {
-      if (x[label].trim().toUpperCase()
-        .includes(searchText.trim().toUpperCase())) {
-        dataSearch.push(x);
-      }
-    });
-    if (searchText.length <= 0) {
-      this.setState({ searchText, datas });
-    } else {
-      this.setState({ searchText, datas: dataSearch });
-    }
+   _changeText =  (searchText) => {
+    const {datasFunction, requestParameters} = this.props;
+    
+
+     requestParameters.searchText = searchText;
+     this.setState({searchText});
+
+
+     datasFunction(requestParameters)
+      .then(response => response.json())
+      .then((json) => {
+        this.setState({datas:json});
+      })
+      .catch((err) => {
+        this.setState({datas:[]});
+        console.log(err);
+      });
   }
 
   _listSelect = () => {
@@ -198,7 +201,7 @@ RNSelect.propTypes = {
   styleItem: object,
   stylePicker: object,
   styleNotFind: object,
-  datas: array.isRequired,
+  //datas: array.isRequired,
   notFind: string,
   selectValue: func,
   rightIcon: func,

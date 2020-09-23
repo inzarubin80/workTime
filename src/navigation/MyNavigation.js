@@ -26,7 +26,8 @@ const StackNavigator = ({isLoggedIn}) => {
     (
       <Stack.Navigator>
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
-      </Stack.Navigator>
+      </Stack.N
+      avigator>
     )
     ;
 }
