@@ -20,6 +20,7 @@ import {
   SelectItemCustom,
   ScrollView,
 } from "./components";
+import { set } from 'lodash';
 
 export class RNSelect extends React.PureComponent {
   constructor(props) {
@@ -70,17 +71,11 @@ export class RNSelect extends React.PureComponent {
   }
 
   _selectValue = select => {
-    
-
-    console.log('_selectValue')
-
-    console.log('this.props.label' + this.props.label);
-    console.log('select[this.props.label]' + select[this.props.label]);
-
-
+  
     this.setState({
       select,
-      searchText: select[this.props.label]
+      searchText: select[this.props.label],
+      isPicker:false
     });
 
     this._textInput.blur();
@@ -90,6 +85,7 @@ export class RNSelect extends React.PureComponent {
    _changeText =  (searchText) => {
     const {datasFunction, requestParameters} = this.props;
     
+    this.setState({isPicker: true});
 
      requestParameters.searchText = searchText;
      this.setState({searchText});
@@ -143,9 +139,19 @@ export class RNSelect extends React.PureComponent {
       ))
   }
 
-  _touchOutView = () => {
-    this._textInput.blur();
-    this.setState({ isPicker: !this.state.isPicker });
+   _touchOutView =  () => {    
+
+    console.log('_touchOutView');
+
+   // setTimeout(()=>
+    
+    //{
+      //this._textInput.blur();
+      //this.setState({isPicker:false});
+   //}
+    //,8000);
+
+    
   }
 
   render() {
@@ -163,7 +169,7 @@ export class RNSelect extends React.PureComponent {
       searchText
     } = this.state;
     return (
-      <View style={styles.select}>
+      <View style={styles.select} >
         <View style={styles.row}>
           <TextInput
             ref={(input) => { this._textInput = input; }}
