@@ -142,8 +142,10 @@ export class RNSelect extends React.PureComponent {
    _touchOutView =  () => {    
 
     console.log('_touchOutView');
-
-   // setTimeout(()=>
+    this._textInput.blur();
+    this.setState({isPicker:false});
+   
+    // setTimeout(()=>
     
     //{
       //this._textInput.blur();
@@ -169,7 +171,7 @@ export class RNSelect extends React.PureComponent {
       searchText
     } = this.state;
     return (
-      <View style={styles.select} >
+      <ScrollView style={styles.select} keyboardShouldPersistTaps="always">
         <View style={styles.row}>
           <TextInput
             ref={(input) => { this._textInput = input; }}
@@ -178,7 +180,9 @@ export class RNSelect extends React.PureComponent {
             onChangeText={text => this._changeText(text)}
             underlineColorAndroid="transparent"
             onFocus={this._modalPicker}
-            onBlur={this._touchOutView}
+            
+            onBlur={()=>this._touchOutView()}
+
             editable={isDisabled}
             style={[
               styles.input,
@@ -201,7 +205,7 @@ export class RNSelect extends React.PureComponent {
             </ScrollView>
           </View>
         }
-      </View>
+      </ScrollView>
     )
   }
 }

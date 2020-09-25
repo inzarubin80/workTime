@@ -2,9 +2,15 @@ import * as React from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
 import CalendarScreen from '../sreens/CalendarScreen'
+
+import SelectionPartnerScreen from '../sreens/SelectionPartnerScreen'
+
+
 import LoginScreen from '../sreens/LoginScreen'
 import EventForm from '../form/EventForm'
+
 import { useSelector } from 'react-redux'
 
 
@@ -16,9 +22,11 @@ const StackNavigator = ({isLoggedIn}) => {
 
   return isLoggedIn ? (
     <Stack.Navigator>
-      
+ 
       <Stack.Screen name="Calendar" component={CalendarScreen} />
       <Stack.Screen name="EventForm" component={EventForm} />
+      <Stack.Screen name="SelectionPartnerScreen" component={SelectionPartnerScreen} />
+      
       
     </Stack.Navigator>
   )
