@@ -67,13 +67,14 @@ const EventScreen = ({ route, navigation }) => {
 
         <ScrollView>
 
-
             <Input
                 placeholder="Дата"
                 value={objFormEvent.date.toString()}
+                onChangeText={value => handleOnChange('date', value)}
                 onBlur={handleBlur('date')}
                 label='Дата'
             />
+
 
             <View>
                 <Text style={styles.labelInput}> Контрагент </Text>
@@ -81,7 +82,7 @@ const EventScreen = ({ route, navigation }) => {
                 <View style={styles.selectInput}>
 
 
-                    <Text style={styles.labelInput}> {''} </Text>
+                    <Text style={styles.labelInput}> {objFormEvent.partner.title} </Text>
 
                     <Button style={styles.buttonInput}
                         onPress=
@@ -91,7 +92,7 @@ const EventScreen = ({ route, navigation }) => {
                                 {
 
                                     searchText: 'Искомый контрагент',
-                                    onPartner: onPartner
+                                    onPartner: handleOnChange
                                 }
 
                             );
