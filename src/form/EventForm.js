@@ -53,8 +53,8 @@ const EventScreen = ({ route, navigation }) => {
     const handleOnChange = (field, value) => {
         setobjFormEvent((prevState) => 
         {       
-            nevStare = {...prevState, [field]:value};
-            return nevStare;
+            return {...prevState, [field]:value};
+            
         }
         )
     }
