@@ -5,7 +5,7 @@ import { Input, Divider, registerCustomIconType } from 'react-native-elements';
 
 import { useSelector, useDispatch } from 'react-redux'
 //import { saveEventDispatch } from '../redux/app/appActions'
-//import event from '../model/event'
+import Event from '../model/event'
 
 const EventScreen = ({ route, navigation }) => {
 
@@ -21,7 +21,7 @@ const EventScreen = ({ route, navigation }) => {
 
 
     if (eventId == '') {
-        initialobjFormEvent = new event();
+        initialobjFormEvent = new Event();
     }
     else {
 
