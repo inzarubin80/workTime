@@ -36,7 +36,7 @@ const SelectionPartnerScreen = props => {
       .then(response => response.json())
       .then((json) => {
         setDatas(json);
-        console.log('json' + json.length);
+        console.log('json---------------------' + json.length);
       })
       .catch((err) => {
         setDatas([]);
@@ -63,16 +63,18 @@ const SelectionPartnerScreen = props => {
         value={searchText}
       />
 
-{/*
 
+
+{/*
       <FlatList
         data={datas}
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
-
 */}
-      <PartnerList listData={datas} navigation={props.navigation} />
+
+
+      <PartnerList datas={datas} navigation={props.navigation} />
 
     </View>
   )

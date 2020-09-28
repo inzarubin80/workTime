@@ -1,19 +1,24 @@
 import React from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
+import { View, FlatList, StyleSheet, Text } from 'react-native';
 
 import PartnerItem from './PartnerItem';
 
-const PartnerList = ({listData}) => {
 
-  console.log('ProductList ' + listData.length);
+const ProductList = ({navigation, datas}) => {
 
-  const renderPartnerItem = ({item}) => {
-
-    console.log('renderProductItem ' + item.name);
+  
+  const renderProductItem = ({item}) => {
+   
+   console.log('item' + item.name);
 
     return (
       <PartnerItem
-      name={item.name}  
+
+        name={item.name}
+        onSelectProject={() => {
+          navigation.navigate('EventForm')
+        }}
+
       />
     );
   };
@@ -21,10 +26,10 @@ const PartnerList = ({listData}) => {
   return (
     <View style={styles.list}>
       <FlatList
-        data={listData}
-        keyExtractor={item => item.id}
-        renderItem={renderPartnerItem}
-       // style={{ width: '100%' }}
+        data={datas}
+        keyExtractor={(item, index) => item.id}
+        renderItem={renderProductItem}
+        style={{ width: '100%' }}
       />
     </View>
   );
@@ -32,11 +37,12 @@ const PartnerList = ({listData}) => {
 
 const styles = StyleSheet.create({
   list: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 15
+
+   // flex: 1,
+   // justifyContent: 'center',
+    //alignItems: 'center',
+    //padding: 15
   }
 });
 
-export default PartnerList;
+export default ProductList;

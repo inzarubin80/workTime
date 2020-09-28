@@ -1,172 +1,146 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, TextInput, View, StyleSheet, Keyboard, ScrollView, Text } from 'react-native';
-import { Formik } from 'formik';
-import { Input, Card } from 'react-native-elements';
+//import { Formik } from 'formik';
+import { Input, Divider, registerCustomIconType } from 'react-native-elements';
+
 import { useSelector, useDispatch } from 'react-redux'
-import { saveEventDispatch } from '../redux/app/appActions'
-
-import RNSelect from '../components/react-native-select-awesome-fetch';
-
-import { getPartners } from '../api/EventDataService'
-
-
-const itemCustom = { color: '#146eff' };
+//import { saveEventDispatch } from '../redux/app/appActions'
+//import event from '../model/event'
 
 const EventScreen = ({ route, navigation }) => {
 
+    
     const { eventId } = route.params;
-    const dispatch = useDispatch();
 
-
-    let initialobj;
-
-    if (eventId == '') {
-        initialobj = { id: '', date: route.params.currentDate, summary: '', title: '', duration: '', number: '' };
-    }
-    else {
-        initialobj = useSelector(state => state.app.events.find((event) => event.id === eventId));
-    }
-
+    console.log('eventId-- ' +  eventId);
+    // const dispatch = useDispatch();
     const hash = useSelector(state => state.user.hash);
 
-    console.log('hash ' + hash);
+
+    let initialobjFormEvent;
+
+
+    if (eventId == '') {
+        initialobjFormEvent = new event();
+    }
+    else {
+
+        initialobjFormEvent = useSelector(state => state.app.events.find((entity) => entity.id === eventId));
+         console.log('initialobjFormEvent ---------- ' + initialobjFormEvent);
+
+    }
+
+    const [objFormEvent, setobjFormEvent] = useState(initialobjFormEvent);
+
+    console.log('objFormEvent- ' + objFormEvent);
+    
+
+
+    //const [number, setNumber] = useState('');
+    //const [id, setId] = useState(objFormEvent.id);
+    //const [date, setDate] = useState(objFormEvent.date);
+
+    //const [title, setTitle] = useState(objFormEvent.title);
+    //const [summary, setSummary] = useState(objFormEvent.summary);
+
+    //const [duration, setDuration] = useState(objFormEvent.duration)
+
+    const handleBlur = () => {
+
+    }
+
+
+    const handleOnChange = (field, value) => {
+        setobjFormEvent((prevState) => 
+        {       
+            nevStare = {...prevState, [field]:value};
+            return nevStare;
+        }
+        )
+    }
+
+
+    //const [summary, setSummary] = useState('');
+
 
     return (
 
-
-        <Formik
-
-            initialValues={initialobj}
-            onSubmit={
-                (values) => {
-                    dispatch(saveEventDispatch(values))
-                    navigation.goBack();
-                }
-            }
-        >
-            {({ handleChange, handleBlur, handleSubmit, values }) => (
+        <ScrollView>
 
 
+            <Input
+                placeholder="Дата"
+                value={objFormEvent.date.toString()}
+                onBlur={handleBlur('date')}
+                label='Дата'
+            />
 
-                <ScrollView>
+            <View>
+                <Text style={styles.labelInput}> Контрагент </Text>
 
-                    {/*                    <KeyboardAvoidingView
-                        style={styles.container} behavior='position' >*/}
-
-                    <Input
-                        placeholder="Номер"
-                        value={values.number.toString()}
-                        //keyboardType='numeric'
-                        //onChangeText={handleChange('number')}
-                        //onBlur={handleBlur('number')}
-                        disabled={true}
-                        label='Номер'
-                    />
+                <View style={styles.selectInput}>
 
 
-                    <View>
-                        <Text style={styles.labelInput}> Контрагент </Text>
+                    <Text style={styles.labelInput}> {''} </Text>
 
-                        <View style={styles.selectInput}>
+                    <Button style={styles.buttonInput}
+                        onPress=
+                        {() => {
 
+                            navigation.navigate('SelectionPartnerScreen',
+                                {
 
-                            <Text style={styles.labelInput}> {''} </Text>
-
-                            <Button style={styles.buttonInput}
-                                onPress=
-                                {() => {
-             
-                                    navigation.navigate('SelectionPartnerScreen',
-                                    {
-                                        searchText: 'Искомый контрагент'
-                                    }
-                                  
-                                    );
+                                    searchText: 'Искомый контрагент',
+                                    onPartner: onPartner
                                 }
-                            }
 
-                                title="Выбор"
-                            />
+                            );
+                        }
+                        }
 
-                        </View>
-                    </View>
-
-                    <Input
-                        placeholder="id"
-                        value={values.id.toString()}
-                        onChangeText={handleChange('id')}
-                        onBlur={handleBlur('id')}
-                        disabled={true}
-                        label='id'
+                        title="Выбор"
                     />
 
-                    <RNSelect
-                        placeholder="Контрагент"
-                        height={60}
-                        styleItem={itemCustom}
-                        datasFunction={getPartners}
-                        requestParameters={{ hash }}
-                        notFind='Не найдены элементы справочника'
-                        label='label'
-                    // onChangeText = {(value)=>{console.log(value)}}
-                    //label = {'java'}
-                    />
+                </View>
+            </View>
+
+           
+
+            <Input
+                placeholder="Заголовок"
+                value={objFormEvent.title.toString()}
+                onBlur={handleBlur('title')}
+                label='Заголовок'
+                onChangeText={value => handleOnChange('title', value)}
+            />
+
+            <Input
+                placeholder="Описание"
+
+                onChangeText={value => handleOnChange('summary', value)}
+
+                onBlur={handleBlur('summary')}
+                value={objFormEvent.summary.toString()}
+                label='Описание'
+                multiline={true}
+                blurOnSubmit={true}
+                onSubmitEditing={() => { Keyboard.dismiss() }}
+            />
 
 
+            {/*
+            <Input
+                placeholder="Количество часов"
+                onChangeText={()=>{}}
+                onBlur={handleBlur('duration')}
+                value={objFormEvent.duration.toString()}
+                keyboardType='numeric'
+                label='Количество часов'
+            />
+            <Button onPress={() => { console.log('Пишем объект') }} title="ОК" />
+        */}
 
-
-                    <Input
-                        placeholder="Дата"
-                        value={values.date.toString()}
-                        onChangeText={handleChange('date')}
-                        onBlur={handleBlur('date')}
-                        label='Дата'
-                    />
-
-                    <Input
-                        placeholder="Заголовок"
-                        value={values.title.toString()}
-                        onChangeText={handleChange('title')}
-                        onBlur={handleBlur('title')}
-                        label='Заголовок'
-
-                    />
-
-
-
-                    <Input
-                        placeholder="Описание"
-                        onChangeText={handleChange('summary')}
-                        onBlur={handleBlur('summary')}
-                        value={values.summary.toString()}
-                        label='Описание'
-                        multiline={true}
-                        blurOnSubmit={true}
-                        onSubmitEditing={() => { Keyboard.dismiss() }}
-                    />
-
-
-                    <Input
-                        placeholder="Количество часов"
-                        onChangeText={handleChange('duration')}
-                        onBlur={handleBlur('duration')}
-                        value={values.duration.toString()}
-                        keyboardType='numeric'
-                        label='Количество часов'
-                    />
-
-
-
-                    <Button onPress={handleSubmit} title="ОК" />
-
-                    {/*</KeyboardAvoidingView>*/}
-
-
-                </ScrollView>
-            )}
-
-        </Formik>
-
+        </ScrollView>
     )
 };
 
@@ -183,7 +157,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
 
-    labelInput:{
+    labelInput: {
         fontSize: 16
     },
 
