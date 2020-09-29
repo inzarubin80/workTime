@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
 import { Input } from 'react-native-elements';
-import { View, FlatList, Text } from 'react-native';
+import { View, Text } from 'react-native';
 
-import { getPartners } from '../api/EventDataService'
+import { getProjects } from '../api/EventDataService'
 
 import { connect } from 'react-redux'
-import PartnerList from '../components/PartnerList';
+import ProjectList from '../components/ProjectList';
 
 
+const SelectionProjectScreen = props => {
 
-
-const SelectionPartnerScreen = props => {
-
-  const [searchText, setSearchText] = useState(props.route.params.searchText);
+  const [searchText, setSearchText] = useState('');
+  const [partner, SetPartner] = useState(props.route.params.partner);
   const [datas, setDatas] = useState([]);
 
 
+  console.log("partner --- " + partner.name);
 
   const Item = ({ title }) => {
 
-    console.log(title);
+   
     return (
       <View>
         <Text> {title}</Text>
@@ -33,7 +33,7 @@ const SelectionPartnerScreen = props => {
 
   React.useEffect(() => {
 
-    getPartners({ searchText: searchText, hash: props.hash })
+    getProjects({ searchText: searchText, hash: props.hash, idPartner:partner.id })
       .then(response => response.json())
       .then((json) => {
         setDatas(json);
@@ -47,7 +47,7 @@ const SelectionPartnerScreen = props => {
 
   React.useLayoutEffect(() => {
     props.navigation.setOptions({
-      title: 'Выбор контрагента',
+      title: 'Выбор проекта',
     });
   }, [props.navigation]);
 
@@ -56,20 +56,26 @@ const SelectionPartnerScreen = props => {
   return (
     <View>
       <Input
-        placeholder="Введите текст"
+        placeholder="Текст поиска"
         // leftIcon={{ type: 'font-awesome', name: 'comment' }}
         // style={styles}
         onChangeText={value => setSearchText(value)}
+        
         value={searchText}
+
+       
+
       />
 
       {(searchText == '') && <Text>Часто используемые</Text>}
 
-      <PartnerList datas={datas} navigation={props.navigation} />
+      <ProjectList datas={datas} navigation={props.navigation}  partner = {partner}/>
 
     </View>
   )
+
 };
+
 
 const mapStateToProps = state => {
   return {
@@ -78,7 +84,7 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps)(SelectionPartnerScreen);
+export default connect(mapStateToProps)(SelectionProjectScreen);
 
 
 

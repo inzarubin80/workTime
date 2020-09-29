@@ -3,12 +3,13 @@ import { View, FlatList, StyleSheet, Text } from 'react-native';
 
 import PartnerItem from './PartnerItem';
 
-const ProductList = ({navigation, datas}) => {
+const ProjectList = ({navigation, datas, partner}) => {
 
+
+  console.log('partner ----------- list' + partner.name);
   
   const renderProductItem = ({item}) => {
    
-   console.log('item' + item.name);
 
     return (
       <PartnerItem
@@ -16,7 +17,8 @@ const ProductList = ({navigation, datas}) => {
       name={item.name}
         onSelectProject={() => {
           //onPartner('partner', item);
-          navigation.navigate('SelectionProjectScreen', {partner:item});
+
+          navigation.navigate('EventForm', {project:item, partner:partner});
         }
       }
 
@@ -46,4 +48,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ProductList;
+export default ProjectList;

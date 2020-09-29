@@ -6,6 +6,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import CalendarScreen from '../sreens/CalendarScreen'
 
 import SelectionPartnerScreen from '../sreens/SelectionPartnerScreen'
+import SelectionProjectScreen from '../sreens/SelectionProjectScreen'
+
 
 
 import LoginScreen from '../sreens/LoginScreen'
@@ -26,6 +28,7 @@ const StackNavigator = ({isLoggedIn}) => {
       <Stack.Screen name="Calendar" component={CalendarScreen} />
       <Stack.Screen name="EventForm" component={EventForm} />
       <Stack.Screen name="SelectionPartnerScreen" component={SelectionPartnerScreen} />
+      <Stack.Screen name="SelectionProjectScreen" component={SelectionProjectScreen} />
       
       
     </Stack.Navigator>

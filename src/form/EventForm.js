@@ -10,17 +10,26 @@ import Event from '../model/event'
 const EventScreen = ({ route, navigation }) => {
 
     
-    const { eventId, partner} = route.params;
+    const { eventId, partner, project} = route.params;
     
     const hash = useSelector(state => state.user.hash);
 
     let initialobjFormEvent;
 
+    console.log('eventId --- ' + eventId);
 
-   if (eventId != '') {
-    initialobjFormEvent = useSelector(state => state.app.events.find((entity) => entity.id === eventId));
+
+    if (partner){
+        console.log('partner --- ' + partner.name);
+    }
     
-    initialobjFormEvent = new Event();
+
+    
+
+   if (eventId) {
+
+        initialobjFormEvent = useSelector(state => state.app.events.find((entity) => entity.id === eventId));
+    
     }
     else {
         initialobjFormEvent = new Event();
@@ -28,23 +37,9 @@ const EventScreen = ({ route, navigation }) => {
 
     const [objFormEvent, setobjFormEvent] = useState(initialobjFormEvent);
 
-    console.log('objFormEvent- ' + objFormEvent);
-    
-
-
-    //const [number, setNumber] = useState('');
-    //const [id, setId] = useState(objFormEvent.id);
-    //const [date, setDate] = useState(objFormEvent.date);
-
-    //const [title, setTitle] = useState(objFormEvent.title);
-    //const [summary, setSummary] = useState(objFormEvent.summary);
-
-    //const [duration, setDuration] = useState(objFormEvent.duration)
-
     const handleBlur = () => {
 
     }
-
 
     const handleOnChange = (field, value) => {
         setobjFormEvent((prevState) => 
@@ -55,19 +50,17 @@ const EventScreen = ({ route, navigation }) => {
         )
     }
 
-
     React.useLayoutEffect(() => {
-
         if (partner) {
             handleOnChange('partner', partner);
         }
-    
+
+        if (project) {
+            handleOnChange('project', project);
+        }
+        
 
     }, [navigation, route]);
-
-
-    //const [summary, setSummary] = useState('');
-
 
     return (
 
@@ -83,12 +76,14 @@ const EventScreen = ({ route, navigation }) => {
 
 
             <View>
-                <Text style={styles.labelInput}> Контрагент </Text>
-
+                
                 <View style={styles.selectInput}>
-
-
+                        
+                    <Text style={styles.labelInput}> Контрагент </Text>
                     <Text style={styles.labelInput}> {objFormEvent.partner.name} </Text>
+                 
+                    <Text style={styles.labelInput}> Проект </Text>
+                    <Text style={styles.labelInput}> {objFormEvent.project.name} </Text>
 
                     <Button style={styles.buttonInput}
                         onPress=
@@ -97,7 +92,7 @@ const EventScreen = ({ route, navigation }) => {
                             navigation.navigate('SelectionPartnerScreen',
                                 {
 
-                                    searchText: 'Искомый контрагент'
+                                    searchText: objFormEvent.partner.name
                                 }
 
                             );
@@ -153,14 +148,14 @@ const EventScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
 
     selectInput: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'space-between',
 
         padding: 20,
         backgroundColor: 'white',
         borderBottomWidth: 1,
         borderBottomColor: '#e8ecf0',
-        flexDirection: 'row'
+      
     },
 
     labelInput: {

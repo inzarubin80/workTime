@@ -20,9 +20,21 @@ export const executeAuthenticationService = (hash) => {
         ;
 }
 
-
 export const getPartners = ({searchText, hash}) => {
     return fetch(`${API_URL}/?typerequest=referencesPartners&searchText=${searchText}`,
+        {
+            method: 'get',
+            headers: new Headers({
+                'Authorization': hash,
+                'Content-Type': 'application/json'
+            })
+        })
+        ;
+}
+
+
+export const getProjects = ({searchText, hash, idPartner}) => {
+    return fetch(`${API_URL}/?typerequest=referencesProjects&searchText=${searchText}&idPartner=${idPartner}`,
         {
             method: 'get',
             headers: new Headers({
