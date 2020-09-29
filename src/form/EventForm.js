@@ -9,9 +9,9 @@ import Event from '../model/event'
 
 const EventScreen = ({ route, navigation }) => {
 
-    
-    const { eventId, partner, project} = route.params;
-    
+
+    const { eventId, partner, project } = route.params;
+
     const hash = useSelector(state => state.user.hash);
 
     let initialobjFormEvent;
@@ -19,17 +19,17 @@ const EventScreen = ({ route, navigation }) => {
     console.log('eventId --- ' + eventId);
 
 
-    if (partner){
+    if (partner) {
         console.log('partner --- ' + partner.name);
     }
-    
 
-    
 
-   if (eventId) {
+
+
+    if (eventId) {
 
         initialobjFormEvent = useSelector(state => state.app.events.find((entity) => entity.id === eventId));
-    
+
     }
     else {
         initialobjFormEvent = new Event();
@@ -42,10 +42,9 @@ const EventScreen = ({ route, navigation }) => {
     }
 
     const handleOnChange = (field, value) => {
-        setobjFormEvent((prevState) => 
-        {       
-            return {...prevState, [field]:value};
-            
+        setobjFormEvent((prevState) => {
+            return { ...prevState, [field]: value };
+
         }
         )
     }
@@ -58,7 +57,7 @@ const EventScreen = ({ route, navigation }) => {
         if (project) {
             handleOnChange('project', project);
         }
-        
+
 
     }, [navigation, route]);
 
@@ -76,26 +75,29 @@ const EventScreen = ({ route, navigation }) => {
 
 
             <View>
-                
+
                 <View style={styles.selectInput}>
-                        
-                    <Text style={styles.labelInput}> Контрагент </Text>
-                    <Text style={styles.labelInput}> {objFormEvent.partner.name} </Text>
-                 
+
+                    <Text> Контрагент </Text>
+
+                    <TextInput
+                    
+                        value={objFormEvent.partner.name}
+                        editable={false} />
+
+
                     <Text style={styles.labelInput}> Проект </Text>
-                    <Text style={styles.labelInput}> {objFormEvent.project.name} </Text>
+
+                    <TextInput
+                       
+                        value={objFormEvent.project.name}
+                        editable={false} />
 
                     <Button style={styles.buttonInput}
                         onPress=
                         {() => {
 
-                            navigation.navigate('SelectionPartnerScreen',
-                                {
-
-                                    searchText: objFormEvent.partner.name
-                                }
-
-                            );
+                            navigation.navigate('SelectionPartnerScreen', { searchText: objFormEvent.partner.name });
                         }
                         }
 
@@ -105,7 +107,7 @@ const EventScreen = ({ route, navigation }) => {
                 </View>
             </View>
 
-           
+
 
             <Input
                 placeholder="Заголовок"
@@ -155,7 +157,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderBottomWidth: 1,
         borderBottomColor: '#e8ecf0',
-      
+
     },
 
     labelInput: {
