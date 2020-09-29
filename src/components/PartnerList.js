@@ -3,7 +3,6 @@ import { View, FlatList, StyleSheet, Text } from 'react-native';
 
 import PartnerItem from './PartnerItem';
 
-
 const ProductList = ({navigation, datas}) => {
 
   
@@ -13,11 +12,13 @@ const ProductList = ({navigation, datas}) => {
 
     return (
       <PartnerItem
-
-        name={item.name}
+      
+      name={item.name}
         onSelectProject={() => {
-          navigation.navigate('EventForm')
-        }}
+          //onPartner('partner', item);
+          navigation.navigate('EventForm', {partner:item});
+        }
+      }
 
       />
     );

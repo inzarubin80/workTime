@@ -74,7 +74,8 @@ const SelectionPartnerScreen = props => {
 */}
 
 
-      <PartnerList datas={datas} navigation={props.navigation} />
+
+      <PartnerList  datas={datas} navigation={props.navigation} />
 
     </View>
   )

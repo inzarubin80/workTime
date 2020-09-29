@@ -10,24 +10,20 @@ import Event from '../model/event'
 const EventScreen = ({ route, navigation }) => {
 
     
-    const { eventId } = route.params;
-
-    console.log('eventId-- ' +  eventId);
-    // const dispatch = useDispatch();
+    const { eventId, partner} = route.params;
+    
     const hash = useSelector(state => state.user.hash);
-
 
     let initialobjFormEvent;
 
 
-    if (eventId == '') {
-        initialobjFormEvent = new Event();
+   if (eventId != '') {
+    initialobjFormEvent = useSelector(state => state.app.events.find((entity) => entity.id === eventId));
+    
+    initialobjFormEvent = new Event();
     }
     else {
-
-        initialobjFormEvent = useSelector(state => state.app.events.find((entity) => entity.id === eventId));
-         console.log('initialobjFormEvent ---------- ' + initialobjFormEvent);
-
+        initialobjFormEvent = new Event();
     }
 
     const [objFormEvent, setobjFormEvent] = useState(initialobjFormEvent);
@@ -60,6 +56,16 @@ const EventScreen = ({ route, navigation }) => {
     }
 
 
+    React.useLayoutEffect(() => {
+
+        if (partner) {
+            handleOnChange('partner', partner);
+        }
+    
+
+    }, [navigation, route]);
+
+
     //const [summary, setSummary] = useState('');
 
 
@@ -82,7 +88,7 @@ const EventScreen = ({ route, navigation }) => {
                 <View style={styles.selectInput}>
 
 
-                    <Text style={styles.labelInput}> {objFormEvent.partner.title} </Text>
+                    <Text style={styles.labelInput}> {objFormEvent.partner.name} </Text>
 
                     <Button style={styles.buttonInput}
                         onPress=
@@ -91,8 +97,7 @@ const EventScreen = ({ route, navigation }) => {
                             navigation.navigate('SelectionPartnerScreen',
                                 {
 
-                                    searchText: 'Искомый контрагент',
-                                    onPartner: handleOnChange
+                                    searchText: 'Искомый контрагент'
                                 }
 
                             );
