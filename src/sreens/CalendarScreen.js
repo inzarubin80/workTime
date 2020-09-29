@@ -35,6 +35,8 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
   React.useLayoutEffect(() => {
     navigation.setOptions({
 
+      title: 'Работы по дням',
+      
       headerRight: () => (
         <Button
           title="Добавить"
@@ -48,11 +50,11 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
     });
   }, [navigation, currentDate]);
 
-  onDateChanged = (date) => {
+  const onDateChanged = (date) => {
     setCurrentDate(date);
   };
 
-  onMonthChange = (month) => {
+  const onMonthChange = (month) => {
     setCurrentMonth(month);
   };
 

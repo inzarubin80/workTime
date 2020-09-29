@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { Button, TextInput, View, StyleSheet, Keyboard, ScrollView, Text } from 'react-native';
-//import { Formik } from 'formik';
-import { Input, Divider, registerCustomIconType } from 'react-native-elements';
-
+import { Button, View, StyleSheet, Keyboard, ScrollView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux'
-//import { saveEventDispatch } from '../redux/app/appActions'
 import Event from '../model/event'
+import Card from '../components/Card'
+import Input from '../components/Input'
+import TitleText from '../components/TitleText'
+import InputDate from '../components/InputDate'
+
+import moment from 'moment';
+
+
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const EventScreen = ({ route, navigation }) => {
 
@@ -18,36 +23,46 @@ const EventScreen = ({ route, navigation }) => {
 
     console.log('eventId --- ' + eventId);
 
-
     if (partner) {
         console.log('partner --- ' + partner.name);
     }
 
-
-
-
     if (eventId) {
-
         initialobjFormEvent = useSelector(state => state.app.events.find((entity) => entity.id === eventId));
-
     }
     else {
         initialobjFormEvent = new Event();
     }
 
+
+    const [modified, setModified] = useState(initialobjFormEvent.id ? false : true);
     const [objFormEvent, setobjFormEvent] = useState(initialobjFormEvent);
+    const [show, setShow] = useState(false);
+
+    const showDatepicker = () => {
+        setShow(true);
+    };
 
     const handleBlur = () => {
 
     }
 
+
     const handleOnChange = (field, value) => {
+
+        setModified(true);
+
         setobjFormEvent((prevState) => {
             return { ...prevState, [field]: value };
-
         }
         )
     }
+
+
+    const onChangeDate = (selectedDate) => {
+         handleOnChange('date', currentDate);
+
+    };
 
     React.useLayoutEffect(() => {
         if (partner) {
@@ -58,41 +73,23 @@ const EventScreen = ({ route, navigation }) => {
             handleOnChange('project', project);
         }
 
+        navigation.setOptions({
+            title: 'Работа ' + objFormEvent.number + (modified ? ' *' : ''),
+        });
 
-    }, [navigation, route]);
+    }, [navigation, route, modified]);
 
     return (
 
-        <ScrollView>
+        <ScrollView >
 
-            <Input
-                placeholder="Дата"
-                value={objFormEvent.date.toString()}
-                onChangeText={value => handleOnChange('date', value)}
-                onBlur={handleBlur('date')}
-                label='Дата'
-            />
+            <View style={styles.screen}>
 
+                <Card style={styles.inputContainer}>
 
-            <View>
-
-                <View style={styles.selectInput}>
-
-                    <Text> Контрагент </Text>
-
-                    <TextInput
-                    
-                        value={objFormEvent.partner.name}
-                        editable={false} />
-
-
-                    <Text style={styles.labelInput}> Проект </Text>
-
-                    <TextInput
-                       
-                        value={objFormEvent.project.name}
-                        editable={false} />
-
+                    <TitleText>Проект</TitleText>
+                    <Input multiline={true} value={objFormEvent.partner.name} />
+                    <Input multiline={true} value={objFormEvent.project.name} />
                     <Button style={styles.buttonInput}
                         onPress=
                         {() => {
@@ -103,70 +100,41 @@ const EventScreen = ({ route, navigation }) => {
 
                         title="Выбор"
                     />
+                </Card>
 
-                </View>
+                            
+              
+                <InputDate  date = {objFormEvent.date} setDate= {onChangeDate}/>
+
+             
+                <TitleText>Наименование</TitleText>
+                <Input multiline={true} value={objFormEvent.title.toString()} onChangeText={value => handleOnChange('title', value)} blurOnSubmit={true} onSubmitEditing={() => { Keyboard.dismiss() }} />
+
+                <TitleText>Содержание</TitleText>
+                <Input multiline={true} value={objFormEvent.summary.toString()} onChangeText={value => handleOnChange('summary', value)} blurOnSubmit={true} onSubmitEditing={() => { Keyboard.dismiss() }} />
+
+                <Button onPress={() => { console.log('Пишем объект') }} title="ОК" />
+
             </View>
-
-
-
-            <Input
-                placeholder="Заголовок"
-                value={objFormEvent.title.toString()}
-                onBlur={handleBlur('title')}
-                label='Заголовок'
-                onChangeText={value => handleOnChange('title', value)}
-            />
-
-            <Input
-                placeholder="Описание"
-
-                onChangeText={value => handleOnChange('summary', value)}
-
-                onBlur={handleBlur('summary')}
-                value={objFormEvent.summary.toString()}
-                label='Описание'
-                multiline={true}
-                blurOnSubmit={true}
-                onSubmitEditing={() => { Keyboard.dismiss() }}
-            />
-
-
-            {/*
-            <Input
-                placeholder="Количество часов"
-                onChangeText={()=>{}}
-                onBlur={handleBlur('duration')}
-                value={objFormEvent.duration.toString()}
-                keyboardType='numeric'
-                label='Количество часов'
-            />
-            <Button onPress={() => { console.log('Пишем объект') }} title="ОК" />
-        */}
-
         </ScrollView>
     )
 };
 
 const styles = StyleSheet.create({
 
-    selectInput: {
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-
-        padding: 20,
-        backgroundColor: 'white',
-        borderBottomWidth: 1,
-        borderBottomColor: '#e8ecf0',
-
+    screen: {
+        flex: 1,
+        padding: 5,
+        alignItems: 'center'
     },
 
-    labelInput: {
-        fontSize: 16
+    inputContainer: {
+        width: 400,
+        maxWidth: '90%',
+        alignItems: 'center'
     },
 
-    valueInput: {
-        minWidth: "65%"
-    },
+
 
     buttonInput: {
         maxWidth: "25%"
