@@ -36,12 +36,12 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
     navigation.setOptions({
 
       title: 'Работы по дням',
-      
+
       headerRight: () => (
         <Button
           title="Добавить"
           onPress={() => {
-            navigation.navigate('EventForm', { eventId: '', currentDate: currentDate }
+            navigation.navigate('EventForm', { eventId: '', currentDate:  moment(currentDate.dateString).format('YYYY-MM-DD') }
             )
           }
           }

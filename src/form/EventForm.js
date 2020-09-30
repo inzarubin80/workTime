@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import { Button, View, StyleSheet, Keyboard, ScrollView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux'
+import {saveEventDispatch} from '../redux/app/appActions'
 import Event from '../model/event'
 import Card from '../components/Card'
 import Input from '../components/Input'
 import TitleText from '../components/TitleText'
-import InputDate from '../components/InputDate'
-
+import {InputDate} from '../components/InputDate'
 import moment from 'moment';
 
-
-import DateTimePicker from '@react-native-community/datetimepicker';
 
 const EventScreen = ({ route, navigation }) => {
 
 
-    const { eventId, partner, project } = route.params;
+    const { eventId, partner, project, currentDate } = route.params;
 
     const hash = useSelector(state => state.user.hash);
+    
+    const dispatch = useDispatch();
 
     let initialobjFormEvent;
 
@@ -31,17 +31,12 @@ const EventScreen = ({ route, navigation }) => {
         initialobjFormEvent = useSelector(state => state.app.events.find((entity) => entity.id === eventId));
     }
     else {
-        initialobjFormEvent = new Event();
+        initialobjFormEvent = new Event('',currentDate );
     }
 
 
     const [modified, setModified] = useState(initialobjFormEvent.id ? false : true);
     const [objFormEvent, setobjFormEvent] = useState(initialobjFormEvent);
-    const [show, setShow] = useState(false);
-
-    const showDatepicker = () => {
-        setShow(true);
-    };
 
     const handleBlur = () => {
 
@@ -58,9 +53,9 @@ const EventScreen = ({ route, navigation }) => {
         )
     }
 
-
     const onChangeDate = (selectedDate) => {
-         handleOnChange('date', currentDate);
+        
+         handleOnChange('date', moment(selectedDate).format('YYYY-MM-DD'));
 
     };
 
@@ -75,6 +70,19 @@ const EventScreen = ({ route, navigation }) => {
 
         navigation.setOptions({
             title: 'Работа ' + objFormEvent.number + (modified ? ' *' : ''),
+
+            headerRight: () => (
+                <Button
+                  title="Записать"
+                  onPress={() => { 
+
+                      dispatch(saveEventDispatch(objFormEvent));
+                      navigation.navigate('Calendar');
+                    
+                    }}
+                      
+                />)
+
         });
 
     }, [navigation, route, modified]);
@@ -84,6 +92,8 @@ const EventScreen = ({ route, navigation }) => {
         <ScrollView >
 
             <View style={styles.screen}>
+
+            <InputDate  date = {new Date(objFormEvent.date)} setDate= {onChangeDate}/>
 
                 <Card style={styles.inputContainer}>
 
@@ -101,19 +111,12 @@ const EventScreen = ({ route, navigation }) => {
                         title="Выбор"
                     />
                 </Card>
-
-                            
-              
-                <InputDate  date = {objFormEvent.date} setDate= {onChangeDate}/>
-
              
                 <TitleText>Наименование</TitleText>
                 <Input multiline={true} value={objFormEvent.title.toString()} onChangeText={value => handleOnChange('title', value)} blurOnSubmit={true} onSubmitEditing={() => { Keyboard.dismiss() }} />
 
                 <TitleText>Содержание</TitleText>
                 <Input multiline={true} value={objFormEvent.summary.toString()} onChangeText={value => handleOnChange('summary', value)} blurOnSubmit={true} onSubmitEditing={() => { Keyboard.dismiss() }} />
-
-                <Button onPress={() => { console.log('Пишем объект') }} title="ОК" />
 
             </View>
         </ScrollView>
@@ -134,11 +137,6 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
 
-
-
-    buttonInput: {
-        maxWidth: "25%"
-    },
 
 });
 

@@ -4,6 +4,8 @@ import { Text } from 'react-native-elements'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import moment from 'moment';
+
 import { THEME } from '../themes'
 
 export const InputDate  = ({ date, setDate }) => {
@@ -36,11 +38,12 @@ export const InputDate  = ({ date, setDate }) => {
             <View style={styles.datetime}>
 
                 <TouchableOpacity onPress={showDatepicker} style={styles.title}>
-                    <Text h4 h4Style={{ color: THEME.MAIN_COLOR }}>{date}</Text>
+                    <Text h4 h4Style={{ color: THEME.MAIN_COLOR }}>{moment(date).format('YYYY-MM-DD')}</Text>
                     <Icon name='calendar-month' size={30} color={THEME.MAIN_COLOR} />
                 </TouchableOpacity>
 
 
+               
 {/*
                 <TouchableOpacity onPress={showTimepicker} style={styles.title}>
                     <Text h4 h4Style={{ color: THEME.MAIN_COLOR }}>{format(date, "HH:mm")}</Text>
@@ -52,7 +55,7 @@ export const InputDate  = ({ date, setDate }) => {
 
             {show && (
                     <DateTimePicker
-                        value={new Date(date)}
+                        value={date}
                         //minimumDate={Date.parse(new Date())}
                         display={mode === "date" ? "default" : "spinner"}
                         is24Hour={true}
