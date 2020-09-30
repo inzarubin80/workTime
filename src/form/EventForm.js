@@ -45,12 +45,14 @@ const EventScreen = ({ route, navigation }) => {
 
     const handleOnChange = (field, value) => {
 
-        setModified(true);
+        
 
         setobjFormEvent((prevState) => {
             return { ...prevState, [field]: value };
         }
         )
+
+        setModified(true);
     }
 
     const onChangeDate = (selectedDate) => {
@@ -59,7 +61,14 @@ const EventScreen = ({ route, navigation }) => {
 
     };
 
-    React.useLayoutEffect(() => {
+    const handleDispatch = () => {
+
+        dispatch(saveEventDispatch(objFormEvent));
+        navigation.navigate('Calendar');
+
+    }
+
+    React.useEffect(() => {  
         if (partner) {
             handleOnChange('partner', partner);
         }
@@ -67,25 +76,16 @@ const EventScreen = ({ route, navigation }) => {
         if (project) {
             handleOnChange('project', project);
         }
+      }, [partner, project]);
 
+    React.useLayoutEffect(() => {
         navigation.setOptions({
             title: 'Работа ' + objFormEvent.number + (modified ? ' *' : ''),
-
             headerRight: () => (
-                <Button
-                  title="Записать"
-                  onPress={() => { 
-
-                      dispatch(saveEventDispatch(objFormEvent));
-                      navigation.navigate('Calendar');
-                    
-                    }}
-                      
-                />)
-
+                <Button title="Записать" onPress={handleDispatch}/>)
         });
 
-    }, [navigation, route, modified]);
+    }, [navigation, route, objFormEvent]);
 
     return (
 
@@ -98,8 +98,8 @@ const EventScreen = ({ route, navigation }) => {
                 <Card style={styles.inputContainer}>
 
                     <TitleText>Проект</TitleText>
-                    <Input multiline={true} value={objFormEvent.partner.name} />
-                    <Input multiline={true} value={objFormEvent.project.name} />
+                    <Input  value={objFormEvent.partner.name} />
+                    <Input  value={objFormEvent.project.name} />
                     <Button style={styles.buttonInput}
                         onPress=
                         {() => {
@@ -113,10 +113,10 @@ const EventScreen = ({ route, navigation }) => {
                 </Card>
              
                 <TitleText>Наименование</TitleText>
-                <Input multiline={true} value={objFormEvent.title.toString()} onChangeText={value => handleOnChange('title', value)} blurOnSubmit={true} onSubmitEditing={() => { Keyboard.dismiss() }} />
+                <Input multiline={true} value={objFormEvent.title} onChangeText={value => handleOnChange('title', value)} blurOnSubmit={true} onSubmitEditing={() => { Keyboard.dismiss() }} />
 
                 <TitleText>Содержание</TitleText>
-                <Input multiline={true} value={objFormEvent.summary.toString()} onChangeText={value => handleOnChange('summary', value)} blurOnSubmit={true} onSubmitEditing={() => { Keyboard.dismiss() }} />
+                <Input multiline={true} value={objFormEvent.summary} onChangeText={value => handleOnChange('summary', value)} blurOnSubmit={true} onSubmitEditing={() => { Keyboard.dismiss() }} />
 
             </View>
         </ScrollView>

@@ -37,7 +37,10 @@ export default (state = initialState, action) => {
                         date: action.payload.date,
                         title: action.payload.title,
                         duration: action.payload.duration,
-                        summary: action.payload.summary
+                        summary: action.payload.summary,
+                        partner: action.payload.partner,
+                        project: action.payload.project
+                        
                     })
                 })
             })

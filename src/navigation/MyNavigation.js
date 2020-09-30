@@ -36,7 +36,7 @@ const StackNavigator = ({isLoggedIn}) => {
     :
     (
       <Stack.Navigator>
-        <Stack.Screen name="LoginScreen" component={LoginScreen} />
+        <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ title: 'Вход в систему' }}/>
       </Stack.Navigator>
     )
     ;
