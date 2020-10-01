@@ -1,5 +1,10 @@
 export const SET_CURRENTDATE      = 'APP/SET_CURRENTDATE';
-export const SET_CURRENTMONTH     = 'APP/SET_CURRENTMONTH'
+export const SET_CURRENTMONTH     = 'APP/SET_CURRENTMONTH';
+
+
+export const SET_SELECT_PARTNER     = 'APP/SET_SELECT_PARTNER';
+export const SET_SELECT_PROJECT     = 'APP/SET_SELECT_PROJECT';
+
 
 export const EDIT_EVENT           = 'APP/EDIT_EVENT';
 export const ADD_EVENT            = 'APP/ADD_EVENT';

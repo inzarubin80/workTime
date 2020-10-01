@@ -11,7 +11,7 @@ import SelectionProjectScreen from '../sreens/SelectionProjectScreen'
 
 
 import LoginScreen from '../sreens/LoginScreen'
-import EventForm from '../form/EventForm'
+import EventForm from '../sreens/EventForm'
 
 import { useSelector } from 'react-redux'
 

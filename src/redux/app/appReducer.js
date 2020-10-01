@@ -1,4 +1,6 @@
-import { SET_CURRENTDATE, EDIT_EVENT, ADD_EVENT, FETCH_EVENTS_SUCCESS, SET_CURRENTMONTH } from '../types'
+import { SET_CURRENTDATE, EDIT_EVENT, ADD_EVENT, FETCH_EVENTS_SUCCESS, SET_CURRENTMONTH, SET_SELECT_PARTNER, SET_SELECT_PROJECT } from '../types'
+import Partner from '../../model/partner'
+import Project from '../../model/project'
 
 const initialState = {
 
@@ -6,7 +8,8 @@ const initialState = {
     currentDate: '',
     currentMonth: '',
     currentId: 0,
-
+    selectPartner: new Partner(),
+    selectProject: new Project()
 };
 
 export default (state = initialState, action) => {
@@ -55,6 +58,14 @@ export default (state = initialState, action) => {
         case FETCH_EVENTS_SUCCESS:
 
             return { ...state, events:action.payload}
+
+        case SET_SELECT_PARTNER:
+
+                return { ...state, selectPartner:action.payload}  
+
+        case SET_SELECT_PROJECT:
+
+                return { ...state, selectProject:action.payload}          
             
         default:
 

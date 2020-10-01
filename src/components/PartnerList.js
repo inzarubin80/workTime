@@ -1,9 +1,14 @@
 import React from 'react';
 import { View, FlatList, StyleSheet, Text } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+
+import {selectPartner, selectProject } from '../redux/app/appActions'
 
 import PartnerItem from './PartnerItem';
 
 const ProductList = ({navigation, datas}) => {
+
+  const dispatch = useDispatch();
 
   
   const renderProductItem = ({item}) => {
@@ -15,7 +20,6 @@ const ProductList = ({navigation, datas}) => {
       
       name={item.name}
         onSelectProject={() => {
-          //onPartner('partner', item);
           navigation.navigate('SelectionProjectScreen', {partner:item});
         }
       }

@@ -1,22 +1,27 @@
 import React, { useState } from 'react';
 import { Button, View, StyleSheet, Keyboard, ScrollView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux'
-import {saveEventDispatch} from '../redux/app/appActions'
+import { saveEventDispatch, selectPartner, selectProject } from '../redux/app/appActions'
 import Event from '../model/event'
 import Card from '../components/Card'
 import Input from '../components/Input'
 import TitleText from '../components/TitleText'
-import {InputDate} from '../components/InputDate'
+import { InputDate } from '../components/InputDate'
 import moment from 'moment';
 
 
 const EventScreen = ({ route, navigation }) => {
 
 
-    const { eventId, partner, project, currentDate } = route.params;
+    const { eventId, currentDate } = route.params;
 
-    const hash = useSelector(state => state.user.hash);
-    
+    const partner = useSelector(state => state.app.selectPartner);
+    const project = useSelector(state => state.app.selectProject);
+
+    console.log('partner *************** ' + partner.name);
+    console.log('project *************** ' + project.name);
+
+
     const dispatch = useDispatch();
 
     let initialobjFormEvent;
@@ -29,9 +34,10 @@ const EventScreen = ({ route, navigation }) => {
 
     if (eventId) {
         initialobjFormEvent = useSelector(state => state.app.events.find((entity) => entity.id === eventId));
+
     }
     else {
-        initialobjFormEvent = new Event('',currentDate );
+        initialobjFormEvent = new Event('', currentDate);
     }
 
 
@@ -44,20 +50,16 @@ const EventScreen = ({ route, navigation }) => {
 
 
     const handleOnChange = (field, value) => {
-
-        
-
         setobjFormEvent((prevState) => {
             return { ...prevState, [field]: value };
         }
         )
-
         setModified(true);
     }
 
     const onChangeDate = (selectedDate) => {
-        
-         handleOnChange('date', moment(selectedDate).format('YYYY-MM-DD'));
+
+        handleOnChange('date', moment(selectedDate).format('YYYY-MM-DD'));
 
     };
 
@@ -68,21 +70,18 @@ const EventScreen = ({ route, navigation }) => {
 
     }
 
-    React.useEffect(() => {  
-        if (partner) {
-            handleOnChange('partner', partner);
-        }
+    React.useEffect(() => {
+        handleOnChange('partner', partner);
+        handleOnChange('project', project);
+    }, [partner, project]);
 
-        if (project) {
-            handleOnChange('project', project);
-        }
-      }, [partner, project]);
+
 
     React.useLayoutEffect(() => {
         navigation.setOptions({
             title: 'Работа ' + objFormEvent.number + (modified ? ' *' : ''),
             headerRight: () => (
-                <Button title="Записать" onPress={handleDispatch}/>)
+                <Button title="Записать" onPress={handleDispatch} />)
         });
 
     }, [navigation, route, objFormEvent]);
@@ -93,13 +92,13 @@ const EventScreen = ({ route, navigation }) => {
 
             <View style={styles.screen}>
 
-            <InputDate  date = {new Date(objFormEvent.date)} setDate= {onChangeDate}/>
+                <InputDate date={new Date(objFormEvent.date)} setDate={onChangeDate} />
 
                 <Card style={styles.inputContainer}>
 
                     <TitleText>Проект</TitleText>
-                    <Input  value={objFormEvent.partner.name} />
-                    <Input  value={objFormEvent.project.name} />
+                    <Input value={objFormEvent.partner.name} />
+                    <Input value={objFormEvent.project.name} />
                     <Button style={styles.buttonInput}
                         onPress=
                         {() => {
@@ -111,7 +110,7 @@ const EventScreen = ({ route, navigation }) => {
                         title="Выбор"
                     />
                 </Card>
-             
+
                 <TitleText>Наименование</TitleText>
                 <Input multiline={true} value={objFormEvent.title} onChangeText={value => handleOnChange('title', value)} blurOnSubmit={true} onSubmitEditing={() => { Keyboard.dismiss() }} />
 
