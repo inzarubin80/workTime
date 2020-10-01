@@ -13,10 +13,7 @@ import moment from 'moment';
 const EventScreen = ({ route, navigation }) => {
 
 
-    const {event} = route.params;
-
-    const partner = useSelector(state => state.app.selectPartner);
-    const project = useSelector(state => state.app.selectProject);
+    const {event, partner, project} = route.params;
 
     const dispatch = useDispatch();
    

@@ -18,7 +18,9 @@ const ListEvents = ({ navigation, events }) => {
 
           navigation.navigate('EventForm',
             {
-              event:itemData.item
+              event:itemData.item,
+              partner:itemData.item.partner,
+              project:itemData.item.project
             }
 
           )

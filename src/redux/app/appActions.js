@@ -7,8 +7,7 @@ import {
   FETCH_SAVE_EVENT_FAILURE,
   FETCH_SAVE_EVENT_REQUEST,
 
-  SET_SELECT_PARTNER,
-  SET_SELECT_PROJECT,
+ 
 
   FETCH_EVENTS_REQUEST,
   FETCH_EVENTS_SUCCESS,
@@ -37,20 +36,6 @@ export const changeEvent = (event) => {
   return {
     type: EDIT_EVENT,
     payload: event
-  }
-}
-
-export const selectProject = (project) => {
-  return {
-    type: SET_SELECT_PROJECT,
-    payload: project
-  }
-}
-
-export const selectPartner = (partner) => {
-  return {
-    type: SET_SELECT_PARTNER,
-    payload: partner
   }
 }
 

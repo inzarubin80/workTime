@@ -22,6 +22,10 @@ import { connect } from 'react-redux'
 import EventList from '../components/EventList'
 
 import Event from '../model/event'
+import Partner from '../model/partner'
+import Project from '../model/project'
+
+
 import { login } from '../redux/user/userActions';
 
 const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEventsDispatch, events, currentDate, currentMonth, login }) => {
@@ -42,7 +46,11 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
         <Button
           title="Добавить"
           onPress={() => {
-            navigation.navigate('EventForm', {event: new Event('',moment(currentDate.dateString).format('YYYY-MM-DD'))}
+            navigation.navigate('EventForm', {
+              event: new Event('',moment(currentDate.dateString).format('YYYY-MM-DD')),
+              partner:new Partner(),
+              project: new Project()  
+            }
             )
           }
           }
