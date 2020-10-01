@@ -14,8 +14,10 @@ const EventItem = props => {
       <TouchableOpacity onPress={props.onSelectEvent}>
         
           <ListItem bottomDivider>
-            <Icon name='rowing' />
-
+          {/*
+            <Icon name='link' />
+          */}
+          
             <ListItem.Chevron />
 
             <ListItem.Content>

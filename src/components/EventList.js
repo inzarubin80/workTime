@@ -18,7 +18,7 @@ const ListEvents = ({ navigation, events }) => {
 
           navigation.navigate('EventForm',
             {
-              eventId: itemData.item.id
+              event:itemData.item
             }
 
           )

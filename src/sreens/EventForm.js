@@ -13,41 +13,19 @@ import moment from 'moment';
 const EventScreen = ({ route, navigation }) => {
 
 
-    const { eventId, currentDate } = route.params;
+    const {event} = route.params;
 
     const partner = useSelector(state => state.app.selectPartner);
     const project = useSelector(state => state.app.selectProject);
 
-    console.log('partner *************** ' + partner.name);
-    console.log('project *************** ' + project.name);
-
-
     const dispatch = useDispatch();
-
-    let initialobjFormEvent;
-
-    console.log('eventId --- ' + eventId);
-
-    if (partner) {
-        console.log('partner --- ' + partner.name);
-    }
-
-    if (eventId) {
-        initialobjFormEvent = useSelector(state => state.app.events.find((entity) => entity.id === eventId));
-
-    }
-    else {
-        initialobjFormEvent = new Event('', currentDate);
-    }
-
-
-    const [modified, setModified] = useState(initialobjFormEvent.id ? false : true);
-    const [objFormEvent, setobjFormEvent] = useState(initialobjFormEvent);
+   
+    const [modified, setModified] = useState(event.id ? false : true);
+    const [objFormEvent, setobjFormEvent] = useState(event);
 
     const handleBlur = () => {
 
     }
-
 
     const handleOnChange = (field, value) => {
         setobjFormEvent((prevState) => {
@@ -60,7 +38,6 @@ const EventScreen = ({ route, navigation }) => {
     const onChangeDate = (selectedDate) => {
 
         handleOnChange('date', moment(selectedDate).format('YYYY-MM-DD'));
-
     };
 
     const handleDispatch = () => {

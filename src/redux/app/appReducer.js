@@ -1,12 +1,15 @@
 import { SET_CURRENTDATE, EDIT_EVENT, ADD_EVENT, FETCH_EVENTS_SUCCESS, SET_CURRENTMONTH, SET_SELECT_PARTNER, SET_SELECT_PROJECT } from '../types'
 import Partner from '../../model/partner'
 import Project from '../../model/project'
+//import moment from 'moment';
+
+
 
 const initialState = {
 
     events: [],
-    currentDate: '',
-    currentMonth: '',
+    currentDate: new Date(),
+    currentMonth: new Date(),
     currentId: 0,
     selectPartner: new Partner(),
     selectProject: new Project()
