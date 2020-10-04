@@ -97,7 +97,7 @@ export const getEventsDispatch = (beginningPeriod, endPeriod) => {
   };
 }
 
-export const saveEventDispatch = (event) => {
+export const saveEventDispatch = (event, navigation) => {
 
 
   return (dispatch, getState) => {
@@ -112,6 +112,9 @@ export const saveEventDispatch = (event) => {
         if (event.id) {
 
           dispatch(changeEvent(json));
+
+          navigation.navigate('Calendar');
+
         }
         else {
           dispatch(addEvent(json));

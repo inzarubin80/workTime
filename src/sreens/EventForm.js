@@ -37,8 +37,8 @@ const EventScreen = ({ route, navigation }) => {
 
     const handleDispatch = () => {
 
-        dispatch(saveEventDispatch(objFormEvent));
-        navigation.navigate('Calendar');
+        dispatch(saveEventDispatch(objFormEvent, navigation));
+       
 
     }
 
