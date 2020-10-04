@@ -108,7 +108,6 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
     }
   });
 
-
   for (let key in DataTime) {
     if (key == currentDate){
       DataTime[key] = carentDecorationDay;
