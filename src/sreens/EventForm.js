@@ -20,9 +20,7 @@ const EventScreen = ({ route, navigation }) => {
     const [modified, setModified] = useState(event.id ? false : true);
     const [objFormEvent, setobjFormEvent] = useState(event);
 
-    const handleBlur = () => {
-
-    }
+    const handleBlur = () => {    }
 
     const handleOnChange = (field, value) => {
         setobjFormEvent((prevState) => {
@@ -44,12 +42,26 @@ const EventScreen = ({ route, navigation }) => {
 
     }
 
+
+    const getValue = (value) => {
+
+        if (value==0) {
+            return '';
+        }
+        else
+        {
+            return value.toString();
+        }
+    }
+
+
     React.useEffect(() => {
         handleOnChange('partner', partner);
         handleOnChange('project', project);
     }, [partner, project]);
 
 
+    
 
     React.useLayoutEffect(() => {
         navigation.setOptions({
@@ -59,6 +71,9 @@ const EventScreen = ({ route, navigation }) => {
         });
 
     }, [navigation, route, objFormEvent]);
+
+
+
 
     return (
 
@@ -90,6 +105,10 @@ const EventScreen = ({ route, navigation }) => {
 
                 <TitleText>Содержание</TitleText>
                 <Input multiline={true} value={objFormEvent.summary} onChangeText={value => handleOnChange('summary', value)} blurOnSubmit={true} onSubmitEditing={() => { Keyboard.dismiss() }} />
+
+
+                <TitleText>Количество часов</TitleText>
+                <Input multiline={true} keyboardType = 'numeric' value={getValue(objFormEvent.duration)} onChangeText={value => handleOnChange('duration', value)} blurOnSubmit={true}/>
 
             </View>
         </ScrollView>
