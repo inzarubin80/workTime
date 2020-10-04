@@ -28,16 +28,55 @@ import Project from '../model/project'
 
 import { login } from '../redux/user/userActions';
 
-const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEventsDispatch, events, currentDate, currentMonth, login }) => {
+const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEventsDispatch, events, currentDate, currentMonth }) => {
 
- React.useEffect(() => {
-   const startOfMonth = moment(currentMonth.dateString).startOf('month').format('YYYYMMDDhhmm');
-   const endOfMonth = moment(currentMonth.dateString).endOf('month').format('YYYYMMDDhhmm');
-   getEventsDispatch(startOfMonth, endOfMonth);
- }, [currentMonth]);
- 
- 
+  React.useEffect(() => {
+    const startOfMonth = moment(currentMonth.dateString).startOf('month').format('YYYYMMDDhhmm');
+    const endOfMonth = moment(currentMonth.dateString).endOf('month').format('YYYYMMDDhhmm');
+    getEventsDispatch(startOfMonth, endOfMonth);
+  }, [currentMonth]);
+
+  const dataDay = events.map((item, index) => item);
+
+  const decorationDay = {
+    selected: true,
+    selectedColor: 'green',
+    //selectedTextColor: 'red',
+  }
+
+
+  
+  const carentDecorationDay = {
+    //selected: true,
+    selectedColor: 'blue',
+    //selectedTextColor: 'blue',
+  }
+
+  let DataTime = {};
+  events.forEach((item, index, array) => {
+  if ([item.date] in DataTime) {
+      DataTime[item.date] = DataTime[item.date] + Number(item.duration);
+    }
+    else {
+      DataTime[item.date] = Number(item.duration);
+    }
+  });
+
+
+  for (let key in DataTime) {
+    if (key == currentDate){
+      DataTime[key] = carentDecorationDay;
+    }
+    else {
+      DataTime[key] = decorationDay;
+    }
+  }
+
+
+  
   React.useLayoutEffect(() => {
+
+   
     navigation.setOptions({
 
       title: 'Работы по дням',
@@ -46,10 +85,12 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
         <Button
           title="Добавить"
           onPress={() => {
+            
             navigation.navigate('EventForm', {
-              event: new Event('',moment(currentDate.dateString).format('YYYY-MM-DD')),
-              partner:new Partner(),
-              project: new Project()  
+              
+             event: new Event('', currentDate),
+             partner: new Partner(),
+              project: new Project()
             }
             )
           }
@@ -57,7 +98,7 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
         />
       ),
     });
-  }, [navigation, currentDate]);
+  }, [navigation, currentDate, events]);
 
   const onDateChanged = (date) => {
     setCurrentDate(date);
@@ -97,19 +138,16 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
   };
 
 
- 
-  
+
+
   const eventsCarrentDate = events.filter(
-    (event) => { 
-      console.log('event.date  ' + event.date);  
-      console.log('event.title ' + event.title);  
-       
+    (event) => {
       return moment(event.date).isSame(currentDate, 'day')
-    
+
     }
   );
 
-    const getTheme = () => {
+  const getTheme = () => {
     const themeColor = '#0059ff';
     const lightThemeColor = '#e6efff';
     const disabledColor = '#a6acb1';
@@ -172,6 +210,9 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
         // hideKnob
         // initialPosition={ExpandableCalendar.positions.OPEN}
         firstDay={1}
+        
+        markedDates={DataTime} 
+
         // markedDates={this.getMarkedDates()} // {'2019-06-01': {marked: true}, '2019-06-02': {marked: true}, '2019-06-03': {marked: true}};
         // markedDates={() => {}} // {'2019-06-01': {marked: true}, '2019-06-02': {marked: true}, '2019-06-03': {marked: true}};
         theme={getTheme()}
@@ -253,7 +294,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  setCurrentDate, setCurrentMonth, getEventsDispatch,login
+  setCurrentDate, setCurrentMonth, getEventsDispatch, login
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CalendarScreen);
