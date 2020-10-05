@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button, View, StyleSheet, Keyboard, ScrollView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux'
 import { saveEventDispatch, selectPartner, selectProject } from '../redux/app/appActions'
-import Event from '../model/event'
 import Card from '../components/Card'
 import Input from '../components/Input'
 import TitleText from '../components/TitleText'
@@ -56,8 +55,16 @@ const EventScreen = ({ route, navigation }) => {
 
 
     React.useEffect(() => {
-        handleOnChange('partner', partner);
-        handleOnChange('project', project);
+
+        if (partner != objFormEvent.partner){
+            handleOnChange('partner', partner);
+        }
+     
+        if (project != objFormEvent.project){
+            handleOnChange('project', project);
+        }
+     
+    
     }, [partner, project]);
 
 
