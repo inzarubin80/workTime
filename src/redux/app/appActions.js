@@ -110,15 +110,13 @@ export const saveEventDispatch = (event, navigation) => {
       .then(response => response.json())
       .then((json) => {
         if (event.id) {
-
           dispatch(changeEvent(json));
-
-          navigation.navigate('Calendar');
-
         }
         else {
           dispatch(addEvent(json));
         }
+        navigation.navigate('Calendar');
+
 
       })
       .catch((err) => {
