@@ -21,9 +21,17 @@ const EventItem = props => {
             <ListItem.Chevron />
 
             <ListItem.Content>
-              <ListItem.Title> <Text h4>{props.title}</Text> </ListItem.Title>
+
+             <ListItem.Title> <Text h3>{props.partner.name} ({props.project.name})</Text> </ListItem.Title>
+             
+
+              <ListItem.Title><Text h4>{props.title} </Text> </ListItem.Title>
               <ListItem.Subtitle>{props.summary}</ListItem.Subtitle>
-              <Text>{props.duration}</Text>
+             
+              <ListItem.Chevron />
+             
+              <Text>{props.duration} ч. </Text>
+           
             </ListItem.Content>
             <ListItem.Chevron />
 

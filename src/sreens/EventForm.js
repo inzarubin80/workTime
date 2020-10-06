@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button, View, StyleSheet, Keyboard, ScrollView } from 'react-native';
+import { TouchableOpacity, View, StyleSheet, Keyboard, ScrollView } from 'react-native';
+import { Button } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux'
 import { saveEventDispatch, selectPartner, selectProject } from '../redux/app/appActions'
 import Card from '../components/Card'
@@ -7,19 +8,19 @@ import Input from '../components/Input'
 import TitleText from '../components/TitleText'
 import { InputDate } from '../components/InputDate'
 import moment from 'moment';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const EventScreen = ({ route, navigation }) => {
 
 
-    const {event, partner, project} = route.params;
+    const { event, partner, project } = route.params;
 
     const dispatch = useDispatch();
-   
+
     const [modified, setModified] = useState(event.id ? false : true);
     const [objFormEvent, setobjFormEvent] = useState(event);
 
-    const handleBlur = () => {    }
+    const handleBlur = () => { }
 
     const handleOnChange = (field, value) => {
         setobjFormEvent((prevState) => {
@@ -37,18 +38,17 @@ const EventScreen = ({ route, navigation }) => {
     const handleDispatch = () => {
 
         dispatch(saveEventDispatch(objFormEvent, navigation));
-       
+
 
     }
 
 
     const getValue = (value) => {
 
-        if (value==0) {
+        if (value == 0) {
             return '';
         }
-        else
-        {
+        else {
             return value.toString();
         }
     }
@@ -56,25 +56,34 @@ const EventScreen = ({ route, navigation }) => {
 
     React.useEffect(() => {
 
-        if (partner != objFormEvent.partner){
+        if (partner != objFormEvent.partner) {
             handleOnChange('partner', partner);
         }
-     
-        if (project != objFormEvent.project){
+
+        if (project != objFormEvent.project) {
             handleOnChange('project', project);
         }
-     
-    
+
+
     }, [partner, project]);
 
 
-    
+
 
     React.useLayoutEffect(() => {
         navigation.setOptions({
             title: 'Работа ' + objFormEvent.number + (modified ? ' *' : ''),
             headerRight: () => (
-                <Button title="Записать" onPress={handleDispatch} />)
+                <TouchableOpacity style={styles.button} onPress={handleDispatch}>
+
+                    <Icon
+                        name="save"
+                        size={30}
+                        color="blue"
+                    />
+
+                </TouchableOpacity>
+            )
         });
 
     }, [navigation, route, objFormEvent]);
@@ -95,16 +104,24 @@ const EventScreen = ({ route, navigation }) => {
                     <TitleText>Проект</TitleText>
                     <Input value={objFormEvent.partner.name} />
                     <Input value={objFormEvent.project.name} />
-                    <Button style={styles.buttonInput}
-                        onPress=
+
+
+                    <TouchableOpacity onPress=
                         {() => {
 
                             navigation.navigate('SelectionPartnerScreen', { searchText: objFormEvent.partner.name });
                         }
-                        }
+                        }>
 
-                        title="Выбор"
-                    />
+                        <Icon
+                            name="search"
+                            size={30}
+                            color="blue"
+                        />
+
+                    </TouchableOpacity>
+
+
                 </Card>
 
                 <TitleText>Наименование</TitleText>
@@ -115,7 +132,7 @@ const EventScreen = ({ route, navigation }) => {
 
 
                 <TitleText>Количество часов</TitleText>
-                <Input multiline={true} keyboardType = 'numeric' value={getValue(objFormEvent.duration)} onChangeText={value => handleOnChange('duration', value)} blurOnSubmit={true}/>
+                <Input multiline={true} keyboardType='numeric' value={getValue(objFormEvent.duration)} onChangeText={value => handleOnChange('duration', value)} blurOnSubmit={true} />
 
             </View>
         </ScrollView>
@@ -133,9 +150,18 @@ const styles = StyleSheet.create({
     inputContainer: {
         width: 400,
         maxWidth: '90%',
-        alignItems: 'center'
+        alignItems: 'center',
+        margin: 5,
+        paddingVertical: 5
     },
 
+    button: {
+        // alignItems: "center",
+        //backgroundColor: "blue",
+        marginRight: 10,
+        //paddingHorizontal:15
+    }
+    
 
 });
 

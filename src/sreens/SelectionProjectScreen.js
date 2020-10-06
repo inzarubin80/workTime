@@ -15,8 +15,7 @@ const SelectionProjectScreen = props => {
   const [datas, setDatas] = useState([]);
 
 
-  console.log("partner --- " + partner.name);
-
+  
   const Item = ({ title }) => {
 
    
@@ -57,17 +56,13 @@ const SelectionProjectScreen = props => {
     <View>
       <Input
         placeholder="Текст поиска"
-        // leftIcon={{ type: 'font-awesome', name: 'comment' }}
-        // style={styles}
+  
         onChangeText={value => setSearchText(value)}
         
         value={searchText}
 
-       
-
+  
       />
-
-      {(searchText == '') && <Text>Часто используемые</Text>}
 
       <ProjectList datas={datas} navigation={props.navigation}  partner = {partner}/>
 

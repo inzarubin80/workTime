@@ -14,6 +14,9 @@ const ListEvents = ({ navigation, events }) => {
         summary={itemData.item.summary}
         id={itemData.item.id}
         duration={itemData.item.duration}
+        partner={itemData.item.partner}
+        project={itemData.item.project}
+        
         onSelectEvent={() => {
 
           navigation.navigate('EventForm',
