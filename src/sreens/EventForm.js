@@ -10,6 +10,8 @@ import { InputDate } from '../components/InputDate'
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import { THEME } from '../themes'
+
 const EventScreen = ({ route, navigation }) => {
 
 
@@ -79,7 +81,7 @@ const EventScreen = ({ route, navigation }) => {
                     <Icon
                         name="save"
                         size={30}
-                        color="blue"
+                        color= {THEME.MAIN_COLOR}
                     />
 
                 </TouchableOpacity>
@@ -116,7 +118,7 @@ const EventScreen = ({ route, navigation }) => {
                         <Icon
                             name="search"
                             size={30}
-                            color="blue"
+                            color={THEME.MAIN_COLOR}
                         />
 
                     </TouchableOpacity>

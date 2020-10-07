@@ -22,10 +22,10 @@ const EventItem = props => {
 
             <ListItem.Content>
 
-             <ListItem.Title> <Text h3>{props.partner.name} ({props.project.name})</Text> </ListItem.Title>
+             <ListItem.Title> <Text h4>{props.partner.name} ({props.project.name})</Text> </ListItem.Title>
              
 
-              <ListItem.Title><Text h4>{props.title} </Text> </ListItem.Title>
+              <ListItem.Title><Text h5>{props.title} </Text> </ListItem.Title>
               <ListItem.Subtitle>{props.summary}</ListItem.Subtitle>
              
               <ListItem.Chevron />
