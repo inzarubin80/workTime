@@ -39,10 +39,14 @@ const EventScreen = ({ route, navigation }) => {
     const handleDispatch = () => {
 
         dispatch(saveEventDispatch(objFormEvent, navigation));
-
-
     }
 
+    const handleCopy = () => {
+        setobjFormEvent((prevState) => {
+            return { ...prevState, id: '', number: '' };
+        })
+        setModified(true);
+    }
 
     const getValue = (value) => {
 
@@ -75,15 +79,33 @@ const EventScreen = ({ route, navigation }) => {
         navigation.setOptions({
             title: 'Работа ' + objFormEvent.number + (modified ? ' *' : ''),
             headerRight: () => (
-                <TouchableOpacity style={styles.button} onPress={handleDispatch}>
 
-                    <Icon
-                        name="save"
-                        size={30}
-                        color= {THEME.MAIN_COLOR}
-                    />
+                <View style={styles.groupButton}>
 
-                </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={handleCopy}>
+                        <Icon
+                            name="copy"
+                            size={30}
+                            color={THEME.MAIN_COLOR}
+                        />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.button} onPress={handleDispatch}>
+
+                        <Icon
+                            name="save"
+                            size={30}
+                            color={THEME.MAIN_COLOR}
+                        />
+
+                    </TouchableOpacity>
+
+                </View>
+
+
+
+
+
             )
         });
 
@@ -157,12 +179,15 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        // alignItems: "center",
-        //backgroundColor: "blue",
-        marginRight: 10,
-        //paddingHorizontal:15
+        marginRight: 30,
+    },
+
+
+    groupButton: {
+        flexDirection: 'row',
     }
-    
+
+
 
 });
 
