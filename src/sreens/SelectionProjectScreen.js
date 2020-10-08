@@ -36,7 +36,7 @@ const SelectionProjectScreen = props => {
       .then(response => response.json())
       .then((json) => {
         setDatas(json);
-        console.log('json---------------------' + json.length);
+      
       })
       .catch((err) => {
         setDatas([]);

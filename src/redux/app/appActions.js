@@ -92,7 +92,7 @@ export const getEventsDispatch = (beginningPeriod, endPeriod) => {
       })
       .catch((err) => {
         dispatch(setEventsFailure());
-        console.log(err);
+    
       });
   };
 }
@@ -121,7 +121,7 @@ export const saveEventDispatch = (event, navigation) => {
       })
       .catch((err) => {
         dispatch(setEventsFailure());
-        console.log(err);
+    
       });
   };
 }

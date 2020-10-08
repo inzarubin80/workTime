@@ -13,7 +13,7 @@ const ProductList = ({navigation, datas}) => {
   
   const renderProductItem = ({item}) => {
    
-   console.log('item' + item.name);
+ 
 
     return (
       <PartnerItem

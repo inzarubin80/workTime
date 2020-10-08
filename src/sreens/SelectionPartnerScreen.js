@@ -19,7 +19,6 @@ const SelectionPartnerScreen = props => {
 
   const Item = ({ title }) => {
 
-    console.log(title);
     return (
       <View>
         <Text> {title}</Text>
@@ -37,7 +36,7 @@ const SelectionPartnerScreen = props => {
       .then(response => response.json())
       .then((json) => {
         setDatas(json);
-        console.log('json---------------------' + json.length);
+    
       })
       .catch((err) => {
         setDatas([]);

@@ -20,7 +20,7 @@ const Stack = createStackNavigator();
 
 const StackNavigator = ({isLoggedIn}) => {
   
-  console.log('isLoggedIn - stack',isLoggedIn);
+
 
   return isLoggedIn ? (
     <Stack.Navigator>

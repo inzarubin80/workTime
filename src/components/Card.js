@@ -3,7 +3,7 @@ import { View, StyleSheet} from "react-native";
 
 const Card = props => {
 
-  //const childrenFunction = () => {Console.log(props.children)}
+
    
   return (
     <View style={{...styles.card, ...props.style}}>

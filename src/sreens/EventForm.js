@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, View, StyleSheet, Keyboard, ScrollView } from 'react-native';
-import { Button } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux'
-import { saveEventDispatch, selectPartner, selectProject } from '../redux/app/appActions'
+import { saveEventDispatch} from '../redux/app/appActions'
 import Card from '../components/Card'
 import Input from '../components/Input'
 import TitleText from '../components/TitleText'
