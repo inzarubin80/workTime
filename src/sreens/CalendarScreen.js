@@ -17,7 +17,7 @@ import {
 
 
 import { setCurrentDate, setCurrentMonth, getEventsDispatch } from '../redux/app/appActions';
-import { Button } from 'react-native-elements';
+import { Button, Header, Card } from 'react-native-elements';
 import moment from 'moment';
 import { connect } from 'react-redux'
 import EventList from '../components/EventList'
@@ -26,7 +26,10 @@ import Event from '../model/event'
 import Partner from '../model/partner'
 import Project from '../model/project'
 
+import Icon from 'react-native-vector-icons/FontAwesome';
 
+
+import { THEME } from '../themes'
 import { login } from '../redux/user/userActions';
 
 const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEventsDispatch, events, currentDate, currentMonth }) => {
@@ -37,7 +40,6 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
     getEventsDispatch(startOfMonth, endOfMonth);
   }, [currentMonth]);
 
-  const dataDay = events.map((item, index) => item);
 
   const decorationDay = {
     selected: true,
@@ -46,7 +48,7 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
   }
 
 
-  
+
   const carentDecorationDay = {
     //selected: true,
     selectedColor: 'blue',
@@ -95,12 +97,12 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
     dayNamesShort: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
     today: 'Сегодня',
   };
-  
+
   LocaleConfig.defaultLocale = 'ru';
 
   let DataTime = {};
   events.forEach((item, index, array) => {
-  if ([item.date] in DataTime) {
+    if ([item.date] in DataTime) {
       DataTime[item.date] = DataTime[item.date] + Number(item.duration);
     }
     else {
@@ -109,7 +111,7 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
   });
 
   for (let key in DataTime) {
-    if (key == currentDate){
+    if (key == currentDate) {
       DataTime[key] = carentDecorationDay;
     }
     else {
@@ -118,30 +120,25 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
   }
 
 
-  
+
   React.useLayoutEffect(() => {
 
-   
+
     navigation.setOptions({
 
       title: 'Работы по дням',
 
       headerRight: () => (
-        <Button
-          title="Добавить"
-          onPress={() => {
-            
-            navigation.navigate('EventForm', {
-              
-             event: new Event('', currentDate),
-             partner: new Partner(),
-              project: new Project()
-            }
-            )
-          }
-          }
-        />
-      ),
+        <TouchableOpacity style={styles.button} onPress={() => {
+
+          navigation.navigate('EventForm', { event: new Event('', currentDate), partner: new Partner(), project: new Project() })
+        }}>
+          <Icon
+            name="plus-square"
+            size={35}
+            color={THEME.MAIN_COLOR}
+          />
+        </TouchableOpacity>),
     });
   }, [navigation, currentDate, events]);
 
@@ -185,12 +182,24 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
 
 
 
+  let totalHours = 0;
+  let totalHoursMonth = 0;
+
   const eventsCarrentDate = events.filter(
     (event) => {
-      return moment(event.date).isSame(currentDate, 'day')
 
+      totalHoursMonth = totalHoursMonth +  event.duration; 
+      if (moment(event.date).isSame(currentDate, 'day')) {
+        totalHours = totalHours + event.duration;
+        return true;
+      }
+      else {
+        return false;
+      }
     }
   );
+
+
 
   const getTheme = () => {
     const themeColor = '#0059ff';
@@ -255,8 +264,8 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
         // hideKnob
         // initialPosition={ExpandableCalendar.positions.OPEN}
         firstDay={1}
-        
-        markedDates={DataTime} 
+
+        markedDates={DataTime}
 
         // markedDates={this.getMarkedDates()} // {'2019-06-01': {marked: true}, '2019-06-02': {marked: true}, '2019-06-03': {marked: true}};
         // markedDates={() => {}} // {'2019-06-01': {marked: true}, '2019-06-02': {marked: true}, '2019-06-03': {marked: true}};
@@ -268,6 +277,8 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
       // disableWeekScroll
       />
 
+     
+
 
       <EventList
 
@@ -276,6 +287,19 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
         events={eventsCarrentDate}
 
       />
+
+
+    <View style = {styles.total}>
+      
+      <View >      
+        <Text style = {styles.totalText}>Итого за день: {totalHours} ч.</Text>
+      </View>
+
+      <View >      
+        <Text style = {styles.totalText}>Итого за месяц: {totalHoursMonth} ч.</Text>
+      </View>
+
+    </View>
 
     </CalendarProvider>
   )
@@ -290,6 +314,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f4f7',
     color: '#79838a'
   },
+
   item: {
     padding: 20,
     backgroundColor: 'white',
@@ -306,6 +331,11 @@ const styles = StyleSheet.create({
     marginTop: 4,
     marginLeft: 4
   },
+
+  button: {
+    marginRight: 30,
+  },
+
   itemTitleText: {
     color: 'black',
     marginLeft: 16,
@@ -326,7 +356,27 @@ const styles = StyleSheet.create({
   emptyItemText: {
     color: '#79838a',
     fontSize: 14
+  },
+
+
+  total: {
+
+   justifyContent: 'space-between',
+
+
+    fontSize: 20,
+    fontWeight: "bold",
+    flexDirection: 'row'
+  },
+
+  totalText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    padding: 5,
   }
+
+
+
 });
 
 
