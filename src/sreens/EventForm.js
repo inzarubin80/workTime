@@ -148,10 +148,10 @@ const EventScreen = ({ route, navigation }) => {
                 </Card>
 
                 <TitleText>Наименование</TitleText>
-                <Input multiline={true} value={objFormEvent.title} onChangeText={value => handleOnChange('title', value)} blurOnSubmit={true} onSubmitEditing={() => { Keyboard.dismiss() }} />
+                <Input style={styles.inputText}  multiline={true} value={objFormEvent.title} onChangeText={value => handleOnChange('title', value)} blurOnSubmit={true} onSubmitEditing={() => { Keyboard.dismiss() }} />
 
                 <TitleText>Содержание</TitleText>
-                <Input multiline={true} value={objFormEvent.summary} onChangeText={value => handleOnChange('summary', value)} blurOnSubmit={true} onSubmitEditing={() => { Keyboard.dismiss() }} />
+                <Input style={styles.inputText}  multiline={true} value={objFormEvent.summary} onChangeText={value => handleOnChange('summary', value)} blurOnSubmit={true} onSubmitEditing={() => { Keyboard.dismiss() }} />
 
 
                 <TitleText>Количество часов</TitleText>
@@ -182,10 +182,17 @@ const styles = StyleSheet.create({
         marginRight: 30,
     },
 
+    inputText: {
+
+        minWidth: '90%',
+
+    },
 
     groupButton: {
         flexDirection: 'row',
     }
+
+
 
 
 

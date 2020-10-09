@@ -17,7 +17,7 @@ import {
 
 
 import { setCurrentDate, setCurrentMonth, getEventsDispatch } from '../redux/app/appActions';
-import { Button, Header, Card } from 'react-native-elements';
+import { Button, Divider} from 'react-native-elements';
 import moment from 'moment';
 import { connect } from 'react-redux'
 import EventList from '../components/EventList'
@@ -288,6 +288,8 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
 
       />
 
+    <Divider style={{ backgroundColor: '#333333' }} />
+
 
     <View style = {styles.total}>
       
@@ -362,17 +364,16 @@ const styles = StyleSheet.create({
   total: {
 
    justifyContent: 'space-between',
+    flexDirection: 'row', 
+   // borderWidth: 1,
 
-
-    fontSize: 20,
-    fontWeight: "bold",
-    flexDirection: 'row'
   },
 
   totalText: {
     fontSize: 16,
-    fontWeight: "bold",
     padding: 5,
+    color: '#333333',
+
   }
 
 
