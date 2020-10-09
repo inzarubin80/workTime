@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
 
     inputText: {
 
-        minWidth: '90%',
+        minWidth: '100%',
 
     },
 
