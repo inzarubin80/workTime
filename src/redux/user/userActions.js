@@ -1,7 +1,8 @@
 import {
   LOGIN_SUCCESS,
   LOGIN_REQUEST,
-  LOGIN_FAILURE
+  LOGIN_FAILURE,
+  LOGIN_LOGOUT
 } from '../types'
 
 import {executeAuthenticationService, getHash} from '../../api/EventDataService';
@@ -28,7 +29,13 @@ const setLoginFailure = (loginData) => {
   };
 };
 
-export const login = (username, password) => {
+export const logOut = (loginData) => {
+  return {
+    type: LOGIN_LOGOUT
+  };
+};
+
+export const login = (username, password, navigation) => {
   return (dispatch) => {  
     
     hash = getHash(username, password);
@@ -45,6 +52,8 @@ export const login = (username, password) => {
           setLoginLocal(username, password, hash);
           dispatch(setLoginSuccess(loginData)); 
 
+          navigation.navigate('Calendar');
+
         } else {
           
           dispatch(setLoginFailure(loginData)); 
@@ -58,6 +67,8 @@ export const login = (username, password) => {
       });
   };
 }
+
+
 
 
 const setLoginLocal = async (username, password,) => {

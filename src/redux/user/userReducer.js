@@ -1,11 +1,9 @@
-import { LOGIN_SUCCESS, LOGIN_REQUEST, LOGIN_FAILURE } from '../types'
-
-
+import { LOGIN_SUCCESS, LOGIN_REQUEST, LOGIN_FAILURE, LOGIN_LOGOUT } from '../types'
 
 const initialState = {
     isLoggedIn: false,
     loggingIn: false,
-    username: 'Z',
+    username: '',
     password: '',
     hash:''
 };
@@ -19,6 +17,7 @@ export default (state = initialState, action) => {
                 ...action.payload,
                 loggingIn: true,
                 isLoggedIn: false,
+
             };
 
         case LOGIN_SUCCESS:
@@ -34,6 +33,11 @@ export default (state = initialState, action) => {
                     ...state,
                     loggingIn: false,
                     isLoggedIn: false,
+                };
+
+            case LOGIN_LOGOUT:
+                return {
+                    ...initialState
                 };
         
 

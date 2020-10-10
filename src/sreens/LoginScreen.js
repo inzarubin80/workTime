@@ -2,24 +2,28 @@ import React, { useState } from 'react';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../redux/user/userActions';
+import { login, logOut } from '../redux/user/userActions';
 
-const LoginScreen = () => {
+const LoginScreen = ({ route, navigation }) => {
 
-    const [username, setUsername] = useState('Z');
+
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
 
     const isLoggedIn = useSelector(state => state.user.isLoggedIn);
-    
+
     return (
         <View style={styles.container}>
 
             <Input
+
+                disabled = {isLoggedIn}
                 value={username}
                 onChangeText={username => setUsername(username)}
                 label='Имя пользователя'
                 style={styles.input}
+
             />
             <Input
                 value={password}
@@ -27,16 +31,17 @@ const LoginScreen = () => {
                 label='Пароль'
                 secureTextEntry={true}
                 style={styles.input}
+                disabled = {isLoggedIn}
+
             />
 
-            {isLoggedIn?(<ActivityIndicator size="large" color="#00ff00" />)
-            :(<Button title= 'Войти' onPress={() => dispatch(login(username, password ))} /> )}
-          
+            {!isLoggedIn && <Button title  = 'Войти' onPress={() => dispatch(login(username, password, navigation))} />}
+
+           {isLoggedIn && <Button title  = 'Выйти' onPress={() => dispatch(logOut())} /> }
+            
         </View>
     );
-    
 }
-
 
 const styles = StyleSheet.create({
     container: {

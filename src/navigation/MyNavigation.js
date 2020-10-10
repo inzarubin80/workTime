@@ -80,9 +80,7 @@ const MyNavigation = (props) => {
         //activeTintColor: 'tomato',
        // inactiveTintColor: 'gray',
       }}
-      
-      
-      
+            
       >
        
       {isLoggedIn && <Tab.Screen name="Home" component={StackNavigator} title = 'Работы'/>}
