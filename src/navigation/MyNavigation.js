@@ -14,6 +14,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import LoginScreen from '../sreens/LoginScreen'
 import EventForm from '../sreens/EventForm'
+import ReportScreen from '../sreens/ReportScreen'
 
 import { useSelector } from 'react-redux'
 
@@ -56,6 +57,9 @@ const MyNavigation = (props) => {
           } else if (route.name === 'User') {
             iconName = 'user';
           }
+          else if (route.name === 'Report') {
+            iconName = 'deer';
+          }
   
         return   <Icon name= {iconName} color={color} size={size}/>;
 
@@ -67,6 +71,9 @@ const MyNavigation = (props) => {
             title = 'Работы';
           } else if (route.name === 'User') {
             title = 'Профиль';
+          }
+          else if (route.name === 'Report') {
+            title = 'Отчеты';
           }
           return <Text>{title}</Text>;
         },
@@ -84,6 +91,8 @@ const MyNavigation = (props) => {
       >
        
       {isLoggedIn && <Tab.Screen name="Home" component={StackNavigator} title = 'Работы'/>}
+      {isLoggedIn && <Tab.Screen name="Report" component={ReportScreen} title = 'Отчеты'/>}
+
       <Tab.Screen name="User" component={LoginScreen}/>
 
       </Tab.Navigator>
