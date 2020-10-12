@@ -1,20 +1,45 @@
-import React from 'react';
+import React, {useState}from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { VictoryBar, VictoryChart, VictoryTheme } from "victory-native";
 import { Button, Divider, Card } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { InputDate } from '../components/InputDate'
+import { connect } from 'react-redux'
+import { getEvents } from '../api/EventDataService';
 
-const data = [
+
+const _data = [
   { quarter: 'Gazprom', earnings: 13000 },
   { quarter: 'Aple', earnings: 16500 },
   { quarter: '1c', earnings: 14250 },
   { quarter: 'Ford', earnings: 19000 }
 ];
 
+const ReportScreen = (props) => {
 
-const ReportScreen = () => {
+  
+  const [StartDate, setStartDate] = useState(new Date());
+  const [finalDate, setFinalDate] = useState(new Date());
+  const [data, setDate] = useState(_data);
+  
+
+
+  const reportGoo = () => {
+    getEvents(StartDate, finalDate, props.hash)
+      .then(response => response.json())
+      .then((json) => {
+        
+        
+        
+        console.log(json);
+
+
+      })
+      .catch((err) => {
+        console.log(err);
+
+      });
+  }
 
   return (
     <View>
@@ -22,39 +47,27 @@ const ReportScreen = () => {
 
       <Card>
         <View style={styles.periodSelection}>
-
+        
           <View style={styles.periodData}>
             <Text style={styles.titleData}>Начало периода</Text>
-            <InputDate date={new Date()} setDate={() => { }} />
-
-
-
-
+            <InputDate date={StartDate} setDate={(value) => { setStartDate(value)}} />
           </View>
-
+        
           <View style={styles.periodData}>
-
             <Text style={styles.titleData}>Конец периода</Text>
-            <InputDate date={new Date()} setDate={() => { }} />
+            <InputDate date={finalDate} setDate={(value) => {setFinalDate(value)}}/>
           </View>
-
-
-
-
+      
         </View>
-
 
         <View style={styles.buttonContainer}>
           <Button
             title="Cформировать"
             style={styles.button}
+            onPress={reportGoo}
           />
         </View>
       </Card>
-
-
-
-
 
       <Divider style={{ backgroundColor: '#333333', marginTop: 10 }} />
 
@@ -114,5 +127,11 @@ const styles = StyleSheet.create({
 
 });
 
+const mapStateToProps = state => {
+  return {
+    hash: state.user.hash,
+  }
+}
 
-export default ReportScreen;
+export default connect(mapStateToProps)(ReportScreen);
+
