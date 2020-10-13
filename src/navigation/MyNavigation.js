@@ -19,7 +19,7 @@ import ReportScreen from '../sreens/ReportScreen'
 import { useSelector } from 'react-redux'
 
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const Stack = createStackNavigator();
 
@@ -53,12 +53,12 @@ const MyNavigation = (props) => {
           let iconName;
 
           if (route.name === 'Home') {
-            iconName = 'home';
+            iconName = 'today';
           } else if (route.name === 'User') {
-            iconName = 'user';
+            iconName = 'accessibility';
           }
           else if (route.name === 'Report') {
-            iconName = 'deer';
+            iconName = 'analytics';
           }
   
         return   <Icon name= {iconName} color={color} size={size}/>;

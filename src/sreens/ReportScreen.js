@@ -1,37 +1,55 @@
 import React, {useState}from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { VictoryBar, VictoryChart, VictoryTheme } from "victory-native";
-import { Button, Divider, Card } from 'react-native-elements';
+import { Button, Divider, Card, Text  } from 'react-native-elements';
 
 import { InputDate } from '../components/InputDate'
 import { connect } from 'react-redux'
 import { getEvents } from '../api/EventDataService';
 
+import moment from 'moment';
 
-const _data = [
-  { quarter: 'Gazprom', earnings: 13000 },
-  { quarter: 'Aple', earnings: 16500 },
-  { quarter: '1c', earnings: 14250 },
-  { quarter: 'Ford', earnings: 19000 }
-];
+
+
+
 
 const ReportScreen = (props) => {
 
   
-  const [StartDate, setStartDate] = useState(new Date());
-  const [finalDate, setFinalDate] = useState(new Date());
-  const [data, setDate] = useState(_data);
+  const [StartDate, setStartDate] = useState(new Date(moment().startOf('month')));// useState(moment().startOf('month'));
+  const [finalDate, setFinalDate] = useState(new Date(moment().endOf('month')));// useState(moment().endOf('month'));
+  const [data, setDate] = useState([]);
   
-
-
   const reportGoo = () => {
-    getEvents(StartDate, finalDate, props.hash)
+    getEvents(moment(StartDate).format('YYYYMMDDhhmm'), moment(finalDate).format('YYYYMMDDhhmm'), props.hash)
       .then(response => response.json())
       .then((json) => {
         
+
+        let newDataObj = {};
+
+        json.map((item) => { 
+          let key = item.partner.name;
+          if ([key] in newDataObj) {
+            newDataObj[key] = newDataObj[key] + Number(item.duration);
+          }
+          else {
+            newDataObj[key] = Number(item.duration);
+          }
+        })
         
-        
-        console.log(json);
+        let newData = [];
+        for (let key in newDataObj) {
+              newData.push({ quarter: key, earnings: newDataObj[key] });   
+        }
+
+      //  newData.sort();
+
+        newData.sort((a, b) => a.quarter > b.quarter ? 1 : -1);
+
+        setDate(newData);
+
+      //  console.log(json);
 
 
       })
@@ -70,9 +88,14 @@ const ReportScreen = (props) => {
       </Card>
 
       <Divider style={{ backgroundColor: '#333333', marginTop: 10 }} />
+     
+      <View >
+        <Text h5 style={styles.titleChart} >Распределение времени по контрагентам </Text>
+      </View>
+
 
       <View style={styles.container}>
-        <VictoryChart width={350} theme={VictoryTheme.material}>
+        <VictoryChart width={350} theme={VictoryTheme.material} >
           <VictoryBar data={data} x="quarter" y="earnings" />
         </VictoryChart>
       </View>
@@ -111,6 +134,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#333333',
 
+  },
+
+  titleChart: {
+    textAlign: 'center',
+    paddingTop: 5
   },
 
   buttonContainer: {
