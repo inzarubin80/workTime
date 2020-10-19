@@ -1,4 +1,4 @@
-import { SET_CURRENTDATE, EDIT_EVENT, ADD_EVENT, FETCH_EVENTS_SUCCESS, SET_CURRENTMONTH } from '../types'
+import { SET_CURRENTDATE, EDIT_EVENT, ADD_EVENT, FETCH_EVENTS_SUCCESS, SET_CURRENTMONTH, DEL_EVENT } from '../types'
 import Partner from '../../model/partner'
 import Project from '../../model/project'
 import moment from 'moment';
@@ -46,7 +46,7 @@ export default (state = initialState, action) => {
                         summary: action.payload.summary,
                         partner: action.payload.partner,
                         project: action.payload.project
-                        
+
                     })
                 })
             })
@@ -54,15 +54,21 @@ export default (state = initialState, action) => {
 
         case ADD_EVENT: {
 
-            return {...state, events:[...state.events, action.payload]}
+            return { ...state, events: [...state.events, action.payload] }
+        }
 
+        case DEL_EVENT: {
+
+            console.log('DEL_EVENT');
+
+            return { ...state, events: state.events.filter(item => item.id !== action.payload.id)}
         }
 
         case FETCH_EVENTS_SUCCESS:
 
-            return { ...state, events:action.payload}
+            return { ...state, events: action.payload }
 
-            
+
         default:
 
             return state

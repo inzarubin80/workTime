@@ -86,13 +86,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         //paddingRight: 5
-        marginRight: 15
+       // marginRight: 15
+       
 
     },
     datetime: {
 
         flexDirection: 'row',
-        //justifyContent: 'space-between',
+        justifyContent: 'space-between',
         //marginRight: 30
     }
 }

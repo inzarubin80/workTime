@@ -32,6 +32,51 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { THEME } from '../themes'
 import { login } from '../redux/user/userActions';
 
+
+LocaleConfig.locales['ru'] = {
+  monthNames: [
+    'Январь',
+    'Февраль',
+    'Март',
+    'Апрель',
+    'Май',
+    'Июнь',
+    'Июль',
+    'Август',
+    'Сентябрь',
+    'Октябрь',
+    'Ноябрь',
+    'Декабрь',
+  ],
+  monthNamesShort: [
+    'Янв',
+    'Фев',
+    'Мар',
+    'Апр',
+    'Май',
+    'Июн',
+    'Июл',
+    'Авг',
+    'Сен',
+    'Окт',
+    'Ноя',
+    'Дек',
+  ],
+  dayNames: [
+    'воскресенье',
+    'понедельник',
+    'вторник',
+    'среда',
+    'четверг',
+    'пятница',
+    'суббота',
+  ],
+  dayNamesShort: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+  today: 'Сегодня',
+};
+
+LocaleConfig.defaultLocale = 'ru';
+
 const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEventsDispatch, events, currentDate, currentMonth }) => {
 
   React.useEffect(() => {
@@ -56,49 +101,7 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
   }
 
 
-  LocaleConfig.locales['ru'] = {
-    monthNames: [
-      'Январь',
-      'Февраль',
-      'Март',
-      'Апрель',
-      'Май',
-      'Июнь',
-      'Июль',
-      'Август',
-      'Сентябрь',
-      'Октябрь',
-      'Ноябрь',
-      'Декабрь',
-    ],
-    monthNamesShort: [
-      'Янв',
-      'Фев',
-      'Мар',
-      'Апр',
-      'Май',
-      'Июн',
-      'Июл',
-      'Авг',
-      'Сен',
-      'Окт',
-      'Ноя',
-      'Дек',
-    ],
-    dayNames: [
-      'воскресенье',
-      'понедельник',
-      'вторник',
-      'среда',
-      'четверг',
-      'пятница',
-      'суббота',
-    ],
-    dayNamesShort: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-    today: 'Сегодня',
-  };
-
-  LocaleConfig.defaultLocale = 'ru';
+ 
 
   let DataTime = {};
   events.forEach((item, index, array) => {
@@ -140,7 +143,7 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
           />
         </TouchableOpacity>),
     });
-  }, [navigation, currentDate, events]);
+  }, [navigation, currentDate]);
 
   const onDateChanged = (date) => {
     setCurrentDate(date);
@@ -149,37 +152,6 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
   const onMonthChange = (month) => {
     setCurrentMonth(month);
   };
-
-  const renderEmptyItem = () => {
-    return (
-      <View style={styles.emptyItem}>
-        <Text style={styles.emptyItemText}>No Events Planned</Text>
-      </View>
-    );
-  }
-
-  const renderItem = ({ item }) => {
-    if (_.isEmpty(item)) {
-      return renderEmptyItem();
-    }
-    return (
-      <TouchableOpacity
-        style={styles.item}>
-        <View>
-          <Text style={styles.itemHourText}>Где мы!!!!!!!</Text>
-
-          <Text style={styles.itemHourText}>{item.hour}</Text>
-          <Text style={styles.itemDurationText}>{item.duration}</Text>
-        </View>
-        <Text style={styles.itemTitleText}>{item.title}</Text>
-        <View style={styles.itemButtonContainer}>
-          <Button title={'Info'} />
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
-
 
 
   let totalHours = 0;

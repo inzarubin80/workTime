@@ -8,6 +8,8 @@ export const SET_SELECT_PROJECT     = 'APP/SET_SELECT_PROJECT';
 
 export const EDIT_EVENT           = 'APP/EDIT_EVENT';
 export const ADD_EVENT            = 'APP/ADD_EVENT';
+export const DEL_EVENT            = 'APP/DEL_EVENT';
+
 
 export const FETCH_SAVE_EVENT_REQUEST      = 'APP/FETCH_SAVE_EVENT_REQUEST';
 export const FETCH_SAVE_EVENT_FAILURE      = 'APP/FETCH_SAVE_EVENT_FAILURE';

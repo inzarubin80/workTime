@@ -4,7 +4,7 @@ import Project from './project'
 
 export default class  Event
 {
-    constructor(id = '', date = '', summary = '', title = '', duration = '', number = '', partner = new Partner(), project = new Project()){
+    constructor(id = '', date = '', deletionMark=false, summary = '', title = '', duration = '', number = '', partner = new Partner(), project = new Project()){
 
         this.id = id;
         this.date = date;
@@ -14,6 +14,8 @@ export default class  Event
         this.number = number;
         this.partner = partner;
         this.project = project;
+        this.deletionMark = deletionMark;
+        
         
 
     }

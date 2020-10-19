@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, View, StyleSheet, Keyboard, ScrollView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux'
-import { saveEventDispatch} from '../redux/app/appActions'
+import { saveEventDispatch } from '../redux/app/appActions'
 import Card from '../components/Card'
 import Input from '../components/Input'
 import TitleText from '../components/TitleText'
@@ -36,9 +36,20 @@ const EventScreen = ({ route, navigation }) => {
         handleOnChange('date', moment(selectedDate).format('YYYY-MM-DD'));
     };
 
-    const handleDispatch = () => {
+    const handleSave = () => {
 
         dispatch(saveEventDispatch(objFormEvent, navigation));
+    }
+
+    const handleRemove = () => {
+
+        if (!objFormEvent.id) {
+            navigation.navigate('Calendar');
+        }
+        else {
+            dispatch(saveEventDispatch({...objFormEvent, deletionMark:true}, navigation));
+        }
+
     }
 
     const handleCopy = () => {
@@ -82,6 +93,15 @@ const EventScreen = ({ route, navigation }) => {
 
                 <View style={styles.groupButton}>
 
+
+                    <TouchableOpacity style={styles.button} onPress={handleRemove}>
+                        <Icon
+                            name="remove"
+                            size={30}
+                            color={THEME.MAIN_COLOR}
+                        />
+                    </TouchableOpacity>
+
                     <TouchableOpacity style={styles.button} onPress={handleCopy}>
                         <Icon
                             name="copy"
@@ -90,15 +110,16 @@ const EventScreen = ({ route, navigation }) => {
                         />
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.button} onPress={handleDispatch}>
-
+                    <TouchableOpacity style={styles.button} onPress={handleSave}>
                         <Icon
                             name="save"
                             size={30}
                             color={THEME.MAIN_COLOR}
                         />
-
                     </TouchableOpacity>
+
+
+
 
                 </View>
 
@@ -148,10 +169,10 @@ const EventScreen = ({ route, navigation }) => {
                 </Card>
 
                 <TitleText>Наименование</TitleText>
-                <Input style={styles.inputText}  multiline={true} value={objFormEvent.title} onChangeText={value => handleOnChange('title', value)} blurOnSubmit={true} onSubmitEditing={() => { Keyboard.dismiss() }} />
+                <Input style={styles.inputText} multiline={true} value={objFormEvent.title} onChangeText={value => handleOnChange('title', value)} blurOnSubmit={true} onSubmitEditing={() => { Keyboard.dismiss() }} />
 
                 <TitleText>Содержание</TitleText>
-                <Input style={styles.inputText}  multiline={true} value={objFormEvent.summary} onChangeText={value => handleOnChange('summary', value)} blurOnSubmit={true} onSubmitEditing={() => { Keyboard.dismiss() }} />
+                <Input style={styles.inputText} multiline={true} value={objFormEvent.summary} onChangeText={value => handleOnChange('summary', value)} blurOnSubmit={true} onSubmitEditing={() => { Keyboard.dismiss() }} />
 
 
                 <TitleText>Количество часов</TitleText>

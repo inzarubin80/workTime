@@ -6,6 +6,7 @@ import {
   ADD_EVENT,
   FETCH_SAVE_EVENT_FAILURE,
   FETCH_SAVE_EVENT_REQUEST,
+  DEL_EVENT,
 
  
 
@@ -43,6 +44,17 @@ export const changeEvent = (event) => {
 export const addEvent = (event) => {
   return {
     type: ADD_EVENT,
+    payload: event
+  }
+}
+
+
+export const deletEvent = (event) => {
+
+
+
+  return {
+    type: DEL_EVENT,
     payload: event
   }
 }
@@ -105,11 +117,16 @@ export const saveEventDispatch = (event, navigation) => {
     const hash = getState().user.hash;
     dispatch(setFetchSaveRequest());
 
-  
+    
     return saveEvent(event, hash)
       .then(response => response.json())
-      .then((json) => {
-        if (event.id) {
+      .then((json) => { 
+         if (event.deletionMark) {
+
+    
+          dispatch(deletEvent(json));
+        }
+        else if (event.id) {
           dispatch(changeEvent(json));
         }
         else {
