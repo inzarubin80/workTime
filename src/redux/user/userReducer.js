@@ -5,7 +5,8 @@ const initialState = {
     loggingIn: false,
     username: '',
     password: '',
-    hash:''
+    hash:'',
+    err:''
 };
 
 export default (state = initialState, action) => {
@@ -31,6 +32,9 @@ export default (state = initialState, action) => {
             case LOGIN_FAILURE:
                 return {
                     ...state,
+
+                    ...action.payload,
+                    
                     loggingIn: false,
                     isLoggedIn: false,
                 };

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
-import { Input, Button } from 'react-native-elements';
+import { Input, Button, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logOut } from '../redux/user/userActions';
 
@@ -12,9 +12,13 @@ const LoginScreen = ({ route, navigation }) => {
     const dispatch = useDispatch();
 
     const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+    const err = useSelector(state => state.user.err);
+
 
     return (
         <View style={styles.container}>
+
+            <Text h5 style={styles.textErr}>{err}</Text>
 
             <Input
 
@@ -34,6 +38,9 @@ const LoginScreen = ({ route, navigation }) => {
                 disabled = {isLoggedIn}
 
             />
+
+
+           
 
             {!isLoggedIn && <Button title  = 'Войти' onPress={() => dispatch(login(username, password, navigation))} />}
 
@@ -57,6 +64,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'black',
         //marginBottom: 10,
+    },
+
+    textErr: {
+        color: 'red',
+        padding:10
     }
 });
 

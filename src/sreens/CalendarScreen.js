@@ -253,11 +253,8 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
 
 
       <EventList
-
-
         navigation={navigation}
         events={eventsCarrentDate}
-
       />
 
     <Divider style={{ backgroundColor: '#333333' }} />
