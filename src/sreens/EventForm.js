@@ -9,6 +9,7 @@ import { InputDate } from '../components/InputDate'
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+
 import { THEME } from '../themes'
 
 const EventScreen = ({ route, navigation }) => {
@@ -21,14 +22,22 @@ const EventScreen = ({ route, navigation }) => {
     const [modified, setModified] = useState(event.id ? false : true);
     const [objFormEvent, setobjFormEvent] = useState(event);
 
+    const [err, setErr] = useState({});
+
+
     const handleBlur = () => { }
 
     const handleOnChange = (field, value) => {
+
         setobjFormEvent((prevState) => {
             return { ...prevState, [field]: value };
         }
+
+
+
         )
         setModified(true);
+
     }
 
     const onChangeDate = (selectedDate) => {
@@ -38,8 +47,23 @@ const EventScreen = ({ route, navigation }) => {
 
     const handleSave = () => {
 
-        dispatch(saveEventDispatch(objFormEvent, navigation));
+       let isErr = false;
+
+        for (let key in err) {
+            if (err[key]) {
+                isErr = true;
+                break;
+            }
+        }
+
+
+        if (!isErr) {
+
+            dispatch(saveEventDispatch(objFormEvent, navigation));
+        }
     }
+
+
 
     const handleRemove = () => {
 
@@ -47,7 +71,7 @@ const EventScreen = ({ route, navigation }) => {
             navigation.navigate('Calendar');
         }
         else {
-            dispatch(saveEventDispatch({...objFormEvent, deletionMark:true}, navigation));
+            dispatch(saveEventDispatch({ ...objFormEvent, deletionMark: true }, navigation));
         }
 
     }
@@ -84,6 +108,33 @@ const EventScreen = ({ route, navigation }) => {
     }, [partner, project]);
 
 
+    React.useEffect(() => {
+
+        let newErr = {};
+
+        for (let key in objFormEvent) {
+
+            newErr[key] = false;
+
+            if ((key == 'deletionMark') || (key == 'id') || (key == 'summary')) {
+                continue;
+            }
+            else if ((key == 'partner') || (key == 'project')) {
+
+                if ((!objFormEvent[key].id) || (objFormEvent[key].id=='00000000-0000-0000-0000-000000000000')) {
+
+                    newErr[key] = true;
+                }
+            }
+            else if (!objFormEvent[key]) {
+                newErr[key] = true;
+
+            }
+        }
+
+        setErr(newErr);
+
+    }, [objFormEvent]);
 
 
     React.useLayoutEffect(() => {
@@ -117,20 +168,11 @@ const EventScreen = ({ route, navigation }) => {
                             color={THEME.MAIN_COLOR}
                         />
                     </TouchableOpacity>
-
-
-
-
                 </View>
-
-
-
-
-
             )
         });
 
-    }, [navigation, route, objFormEvent]);
+    }, [navigation, route, objFormEvent, err]);
 
 
 
@@ -145,14 +187,15 @@ const EventScreen = ({ route, navigation }) => {
 
                 <Card style={styles.inputContainer}>
 
-                    <TitleText>Проект</TitleText>
+                    <TitleText style={err.partner ? styles.TitleTextErr : styles.TitleTextOk}>Проект</TitleText>
                     <Input value={objFormEvent.partner.name} />
+
+                    <TitleText style={err.project ? styles.TitleTextErr : styles.TitleTextOk}>Договор</TitleText>
                     <Input value={objFormEvent.project.name} />
 
 
                     <TouchableOpacity onPress=
                         {() => {
-
                             navigation.navigate('SelectionPartnerScreen', { searchText: objFormEvent.partner.name });
                         }
                         }>
@@ -168,14 +211,14 @@ const EventScreen = ({ route, navigation }) => {
 
                 </Card>
 
-                <TitleText>Наименование</TitleText>
+                <TitleText style={err.title ? styles.TitleTextErr : styles.TitleTextOk}>Наименование</TitleText>
                 <Input style={styles.inputText} multiline={true} value={objFormEvent.title} onChangeText={value => handleOnChange('title', value)} blurOnSubmit={true} onSubmitEditing={() => { Keyboard.dismiss() }} />
 
                 <TitleText>Содержание</TitleText>
                 <Input style={styles.inputText} multiline={true} value={objFormEvent.summary} onChangeText={value => handleOnChange('summary', value)} blurOnSubmit={true} onSubmitEditing={() => { Keyboard.dismiss() }} />
 
 
-                <TitleText>Количество часов</TitleText>
+                <TitleText style={err.duration ? styles.TitleTextErr : styles.TitleTextOk}>Количество часов</TitleText>
                 <Input multiline={true} keyboardType='numeric' value={getValue(objFormEvent.duration)} onChangeText={value => handleOnChange('duration', value)} blurOnSubmit={true} />
 
             </View>
@@ -211,11 +254,14 @@ const styles = StyleSheet.create({
 
     groupButton: {
         flexDirection: 'row',
+    },
+
+    TitleTextErr: {
+        color: 'red'
+    },
+    TitleTextOk: {
+        color: 'green'
     }
-
-
-
-
 
 });
 
