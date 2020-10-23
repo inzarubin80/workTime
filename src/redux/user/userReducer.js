@@ -1,9 +1,9 @@
 import { LOGIN_SUCCESS, LOGIN_REQUEST, LOGIN_FAILURE, LOGIN_LOGOUT } from '../types'
 
-const initialState = {
-    isLoggedIn: false,
-    loggingIn: false,
-    username: '',
+const  initialState = {
+    isLoggedIn:  false ,
+    loggingIn:  false,
+    username:   '',
     password: '',
     hash:'',
     err:''

@@ -9,6 +9,9 @@ import { executeAuthenticationService, getHash } from '../../api/EventDataServic
 import AsyncStorage from '@react-native-community/async-storage';
 
 const setLoginSuccess = (loginData) => {
+
+  setLoginLocal(loginData);
+
   return {
     type: LOGIN_SUCCESS,
     payload: loginData,
@@ -23,6 +26,9 @@ const setLoginRequest = (loginData) => {
 };
 
 const setLoginFailure = (loginData) => {
+
+  setLoginLocal(null);
+
   return {
     type: LOGIN_FAILURE,
     payload: loginData,
@@ -30,15 +36,21 @@ const setLoginFailure = (loginData) => {
 };
 
 export const logOut = (loginData) => {
+  
+  setLoginLocal(null);
+
   return {
     type: LOGIN_LOGOUT
   };
 };
 
+
+
+
 export const login = (username, password, navigation) => {
   return (dispatch) => {
 
-    hash = getHash(username, password);
+   const hash = getHash(username, password);
 
     let loginData = { username: username, password: password, hash: hash, err: ''};
 
@@ -62,7 +74,7 @@ export const login = (username, password, navigation) => {
 
         if (json.msg === 'success') {
 
-          setLoginLocal(username, password, hash);
+          
 
           
           dispatch(setLoginSuccess(loginData));
@@ -85,13 +97,35 @@ export const login = (username, password, navigation) => {
   };
 }
 
-const setLoginLocal = async (username, password,) => {
+
+
+export const loginFromAsyncStorage = () => {
+  return (dispatch) => {
+    return AsyncStorage.getItem('session').then(loginString => JSON.parse(loginString))
+      .then((loginData) => {
+        dispatch(setLoginSuccess(loginData));
+      })
+      .catch((err) => {  
+        
+        dispatch(setLoginFailure({ username: '', password: '', err:'', hash: ''}));
+        console.log(err);
+      });
+  };
+}
+
+const setLoginLocal = async (loginData) => {
   try {
-    await AsyncStorage.setItem('username', username);
-    await AsyncStorage.setItem('password', password);
-    await AsyncStorage.setItem('hash', hash);
+
+    const session = JSON.stringify(loginData);
+
+    console.log(session);
+
+    await AsyncStorage.setItem('session', session );
 
   } catch (err) {
     console.log(err);
   }
 };
+
+
+
