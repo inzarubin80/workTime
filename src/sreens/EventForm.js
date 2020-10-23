@@ -52,6 +52,7 @@ const EventScreen = ({ route, navigation }) => {
         for (let key in err) {
             if (err[key]) {
                 isErr = true;
+                console.log('ошибка в поле ---------' + key);
                 break;
             }
         }
@@ -116,7 +117,7 @@ const EventScreen = ({ route, navigation }) => {
 
             newErr[key] = false;
 
-            if ((key == 'deletionMark') || (key == 'id') || (key == 'summary')) {
+            if ((key == 'deletionMark') || (key == 'id') || (key == 'summary') || (key == 'number')) {
                 continue;
             }
             else if ((key == 'partner') || (key == 'project')) {
