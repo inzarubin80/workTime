@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, LOGIN_REQUEST, LOGIN_FAILURE, LOGIN_LOGOUT } from '../types'
+import { LOGIN_SUCCESS, LOGIN_REQUEST, LOGIN_FAILURE, LOGIN_LOGOUT, SET_USERNAME, SET_PASSWORD } from '../types'
 
 const  initialState = {
     isLoggedIn:  false ,
@@ -29,6 +29,20 @@ export default (state = initialState, action) => {
                 isLoggedIn: true,
             };
 
+        case SET_USERNAME:
+            return {
+                ...state,       
+                username: action.payload,
+   
+            };
+
+        case SET_PASSWORD:
+            return {
+                ...state,       
+                password: action.payload,
+   
+            };
+        
             case LOGIN_FAILURE:
                 return {
                     ...state,
@@ -38,6 +52,7 @@ export default (state = initialState, action) => {
                     loggingIn: false,
                     isLoggedIn: false,
                 };
+
 
             case LOGIN_LOGOUT:
                 return {

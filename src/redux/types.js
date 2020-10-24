@@ -24,3 +24,8 @@ export const LOGIN_FAILURE       = 'USER/LOGIN_FAILURE';
 export const LOGIN_LOGOUT        = 'USER/LOGIN_LOGOUT';
 
 
+export const SET_USERNAME        = 'USER/SET_USERNAME';
+export const SET_PASSWORD        = 'USER/SET_PASЫWORD';
+
+
+

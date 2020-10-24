@@ -2,7 +2,10 @@ import {
   LOGIN_SUCCESS,
   LOGIN_REQUEST,
   LOGIN_FAILURE,
-  LOGIN_LOGOUT
+  LOGIN_LOGOUT,
+
+  SET_PASSWORD,
+  SET_USERNAME
 } from '../types'
 
 import { executeAuthenticationService, getHash } from '../../api/EventDataService';
@@ -17,6 +20,23 @@ const setLoginSuccess = (loginData) => {
     payload: loginData,
   };
 };
+
+
+export const setUserName = (userName) => {
+  return {
+    type: SET_USERNAME,
+    payload: userName,
+  };
+};
+
+export  const setPassword = (password) => {
+  return {
+    type: SET_PASSWORD,
+    payload: password,
+  };
+};
+
+
 
 const setLoginRequest = (loginData) => {
   return {

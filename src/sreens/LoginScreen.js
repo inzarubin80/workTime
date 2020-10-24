@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import { Input, Button, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, logOut } from '../redux/user/userActions';
+import { login, logOut, setUserName, setPassword } from '../redux/user/userActions';
+
 
 const LoginScreen = ({ route, navigation }) => {
 
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+   
     const dispatch = useDispatch();
 
     const isLoggedIn = useSelector(state => state.user.isLoggedIn);
     const err = useSelector(state => state.user.err);
+    const username = useSelector(state => state.user.username);
+    const password = useSelector(state => state.user.password);
+    
 
 
     return (
@@ -24,14 +27,14 @@ const LoginScreen = ({ route, navigation }) => {
 
                 disabled = {isLoggedIn}
                 value={username}
-                onChangeText={username => setUsername(username)}
+                onChangeText={username => dispatch(setUserName(username))}
                 label='Имя пользователя'
                 style={styles.input}
 
             />
             <Input
                 value={password}
-                onChangeText={password => setPassword(password)}
+                onChangeText={password =>dispatch(setPassword(password))}
                 label='Пароль'
                 secureTextEntry={true}
                 style={styles.input}
