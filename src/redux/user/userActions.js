@@ -124,6 +124,7 @@ export const loginFromAsyncStorage = () => {
     return AsyncStorage.getItem('session').then(loginString => JSON.parse(loginString))
       .then((loginData) => {
         dispatch(setLoginSuccess(loginData));
+     
       })
       .catch((err) => {  
         

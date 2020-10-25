@@ -48,6 +48,8 @@ const MyNavigation = (props) => {
     <NavigationContainer>
       <Tab.Navigator
       
+      initialRouteName="Home"
+
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -77,6 +79,9 @@ const MyNavigation = (props) => {
           }
           return <Text>{title}</Text>;
         },
+
+
+        
 
 
 

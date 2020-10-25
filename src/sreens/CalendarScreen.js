@@ -86,11 +86,22 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
   }, [currentMonth]);
 
 
-  const decorationDay = {
+  const decorationNormDay = {
     selected: true,
-    selectedColor: 'green',
+    selectedColor: '#006600',
     //selectedTextColor: 'red',
   }
+
+  const decorationLiteDay = {
+    selected: true,
+    selectedColor: '#33FF33',
+  }
+
+const decorationHardDay = {
+    selected: true,
+    selectedColor: '#003300',
+  }
+  
 
 
 
@@ -118,7 +129,21 @@ const CalendarScreen = ({ navigation, setCurrentMonth, setCurrentDate, getEvents
       DataTime[key] = carentDecorationDay;
     }
     else {
-      DataTime[key] = decorationDay;
+    
+      if (DataTime[key]>8)
+      {
+        DataTime[key] = decorationHardDay;
+      }
+      else if (DataTime[key]==8)
+      {
+        DataTime[key] = decorationNormDay;
+      }
+      else
+      {
+        DataTime[key] = decorationLiteDay;
+      }
+     
+    
     }
   }
 
